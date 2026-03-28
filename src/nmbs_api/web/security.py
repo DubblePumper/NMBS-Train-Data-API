@@ -26,7 +26,7 @@ logger = logging.getLogger(__name__)
 
 # --- Rate Limiting Configuration ---
 DEFAULT_RATE_LIMITS = {
-    "default": "200 per day, 50 per hour",
+    "default": ["200 per day", "50 per hour"],
     "health_check": "60 per minute",
     "trip_search": "30 per minute",
     "station_info": "60 per minute",
@@ -320,7 +320,8 @@ def run_security_audit() -> Dict[str, Any]:
     # Check HTTPS enforcement
     results['checks'].append({
         'name': 'https_enforcement',
-        'status': 'enabled',
+        'status': 'disabled',
+        'details': 'HTTPS redirect middleware is currently disabled in _register_security_middleware',
         'except': ['localhost', '127.0.0.1']
     })
     

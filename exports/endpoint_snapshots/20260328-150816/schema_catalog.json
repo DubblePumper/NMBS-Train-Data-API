@@ -1,0 +1,224 @@
+{
+  "name": "schema_catalog",
+  "method": "GET",
+  "url": "http://localhost:25580/api/schema",
+  "ok": true,
+  "status": 200,
+  "fetched_at": "2026-03-28T14:08:16Z",
+  "request_body": null,
+  "response_headers": {
+    "Server": "Werkzeug/3.1.7 Python/3.14.3",
+    "Date": "Sat, 28 Mar 2026 14:08:16 GMT",
+    "Content-Type": "application/json",
+    "Content-Length": "5329",
+    "Content-Security-Policy": "default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline';",
+    "X-Content-Type-Options": "nosniff",
+    "X-Frame-Options": "DENY",
+    "X-XSS-Protection": "1; mode=block",
+    "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+    "Cache-Control": "no-store, no-cache, must-revalidate, max-age=0",
+    "Pragma": "no-cache",
+    "Referrer-Policy": "strict-origin-when-cross-origin",
+    "Access-Control-Allow-Origin": "*",
+    "Connection": "close"
+  },
+  "is_json": true,
+  "body": {
+    "ok": true,
+    "metadata": {
+      "api_name": "NMBS Train Data API",
+      "version": "1.0.0",
+      "endpoint": "/api/schema",
+      "data_type": "schema_catalog",
+      "generated_at": "2026-03-28T14:07:18.772662"
+    },
+    "data": {
+      "spec_name": "NMBS Train Data API Schema Catalog",
+      "spec_type": "json-schema-catalog",
+      "schema_spec_version": "1.0.0",
+      "api_version": "1.0.0",
+      "base_url": "http://localhost:25580",
+      "endpoints": [
+        "cache_index",
+        "cache_item",
+        "health",
+        "index",
+        "planning_file",
+        "planning_files",
+        "realtime_data",
+        "security_audit",
+        "trajectories",
+        "update"
+      ],
+      "components": {
+        "base_envelope": {
+          "type": "object",
+          "required": [
+            "ok",
+            "metadata"
+          ],
+          "properties": {
+            "ok": {
+              "type": "boolean"
+            },
+            "metadata": {
+              "type": "object",
+              "required": [
+                "api_name",
+                "version",
+                "endpoint",
+                "data_type",
+                "generated_at"
+              ],
+              "properties": {
+                "api_name": {
+                  "type": "string"
+                },
+                "version": {
+                  "type": "string"
+                },
+                "endpoint": {
+                  "type": "string"
+                },
+                "data_type": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "generated_at": {
+                  "type": "string"
+                },
+                "record_count": {
+                  "type": "integer"
+                },
+                "total_records": {
+                  "type": "integer"
+                },
+                "page": {
+                  "type": "integer"
+                },
+                "page_size": {
+                  "type": "integer"
+                },
+                "total_pages": {
+                  "type": "integer"
+                }
+              },
+              "additionalProperties": true
+            },
+            "data": {},
+            "error": {
+              "type": "string"
+            },
+            "message": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": true
+        },
+        "error_envelope": {
+          "allOf": [
+            {
+              "type": "object",
+              "required": [
+                "ok",
+                "metadata"
+              ],
+              "properties": {
+                "ok": {
+                  "type": "boolean"
+                },
+                "metadata": {
+                  "type": "object",
+                  "required": [
+                    "api_name",
+                    "version",
+                    "endpoint",
+                    "data_type",
+                    "generated_at"
+                  ],
+                  "properties": {
+                    "api_name": {
+                      "type": "string"
+                    },
+                    "version": {
+                      "type": "string"
+                    },
+                    "endpoint": {
+                      "type": "string"
+                    },
+                    "data_type": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "generated_at": {
+                      "type": "string"
+                    },
+                    "record_count": {
+                      "type": "integer"
+                    },
+                    "total_records": {
+                      "type": "integer"
+                    },
+                    "page": {
+                      "type": "integer"
+                    },
+                    "page_size": {
+                      "type": "integer"
+                    },
+                    "total_pages": {
+                      "type": "integer"
+                    }
+                  },
+                  "additionalProperties": true
+                },
+                "data": {},
+                "error": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                }
+              },
+              "additionalProperties": true
+            },
+            {
+              "type": "object",
+              "required": [
+                "ok",
+                "error",
+                "message"
+              ],
+              "properties": {
+                "ok": {
+                  "const": false
+                },
+                "error": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          ]
+        }
+      },
+      "links": {
+        "cache_index": "http://localhost:25580/api/schema/cache_index",
+        "cache_item": "http://localhost:25580/api/schema/cache_item",
+        "health": "http://localhost:25580/api/schema/health",
+        "index": "http://localhost:25580/api/schema/index",
+        "planning_file": "http://localhost:25580/api/schema/planning_file",
+        "planning_files": "http://localhost:25580/api/schema/planning_files",
+        "realtime_data": "http://localhost:25580/api/schema/realtime_data",
+        "security_audit": "http://localhost:25580/api/schema/security_audit",
+        "trajectories": "http://localhost:25580/api/schema/trajectories",
+        "update": "http://localhost:25580/api/schema/update"
+      }
+    }
+  }
+}

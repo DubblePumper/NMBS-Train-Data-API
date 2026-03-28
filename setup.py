@@ -11,9 +11,9 @@ setup(
     description="API for accessing Belgian railways (NMBS/SNCB) real-time and planning data",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/yourusername/nmbs-train-data-api",
+    url="https://github.com/DubblePumper/NMBS-Train-Data-API",
     project_urls={
-        "Bug Tracker": "https://github.com/yourusername/nmbs-train-data-api/issues",
+        "Bug Tracker": "https://github.com/DubblePumper/NMBS-Train-Data-API/issues",
     },
     classifiers=[
         "Programming Language :: Python :: 3",
@@ -22,7 +22,7 @@ setup(
     ],
     package_dir={"": "src"},
     packages=find_packages(where="src"),
-    python_requires=">=3.7",
+    python_requires=">=3.10",
     install_requires=[
         "gtfs-realtime-bindings>=1.0.0",
         "protobuf>=3.20.0",
@@ -39,8 +39,8 @@ setup(
     ],
     entry_points={
         "console_scripts": [
-            "nmbs-data-service=service:main",
-            "nmbs-web-api=run_web_api:main",
+            "nmbs-data-service=nmbs_api.cli.service_runner:main",
+            "nmbs-web-api=nmbs_api.cli.web_runner:main",
         ],
     },
 )

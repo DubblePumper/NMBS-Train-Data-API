@@ -1,0 +1,106 @@
+{
+  "name": "planning_stop_times",
+  "method": "GET",
+  "url": "http://localhost:25580/api/planningdata/stop_times?limit=5",
+  "ok": true,
+  "status": 200,
+  "fetched_at": "2026-03-28T14:08:19Z",
+  "request_body": null,
+  "response_headers": {
+    "Server": "Werkzeug/3.1.7 Python/3.14.3",
+    "Date": "Sat, 28 Mar 2026 14:08:19 GMT",
+    "Content-Type": "application/json",
+    "Content-Length": "2097",
+    "Content-Security-Policy": "default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline';",
+    "X-Content-Type-Options": "nosniff",
+    "X-Frame-Options": "DENY",
+    "X-XSS-Protection": "1; mode=block",
+    "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+    "Cache-Control": "no-store, no-cache, must-revalidate, max-age=0",
+    "Pragma": "no-cache",
+    "Referrer-Policy": "strict-origin-when-cross-origin",
+    "Access-Control-Allow-Origin": "*",
+    "Connection": "close"
+  },
+  "is_json": true,
+  "body": {
+    "ok": true,
+    "metadata": {
+      "api_name": "NMBS Train Data API",
+      "version": "1.0.0",
+      "endpoint": "/api/planningdata/stop_times",
+      "data_type": "stop_times",
+      "generated_at": "2026-03-28T14:07:18.772662",
+      "record_count": 5,
+      "total_records": 975788,
+      "page": 0,
+      "page_size": 5,
+      "total_pages": 195158
+    },
+    "data": [
+      {
+        "trip_id": "88____:046::8822004:8822426:2:1644:20260216",
+        "arrival_time": "16:40:00",
+        "departure_time": "16:40:00",
+        "stop_id": "8822004",
+        "stop_sequence": "1",
+        "stop_headsign": "",
+        "pickup_type": "0",
+        "drop_off_type": "1",
+        "shape_dist_traveled": ""
+      },
+      {
+        "trip_id": "88____:046::8822004:8822426:2:1644:20260216",
+        "arrival_time": "16:44:00",
+        "departure_time": "16:44:00",
+        "stop_id": "8822426",
+        "stop_sequence": "2",
+        "stop_headsign": "",
+        "pickup_type": "1",
+        "drop_off_type": "0",
+        "shape_dist_traveled": ""
+      },
+      {
+        "trip_id": "88____:007::8882362:8883006:8:603:20260821",
+        "arrival_time": "05:20:00",
+        "departure_time": "05:20:00",
+        "stop_id": "8882362",
+        "stop_sequence": "1",
+        "stop_headsign": "",
+        "pickup_type": "0",
+        "drop_off_type": "1",
+        "shape_dist_traveled": ""
+      },
+      {
+        "trip_id": "88____:007::8882362:8883006:8:603:20260821",
+        "arrival_time": "05:24:00",
+        "departure_time": "05:25:00",
+        "stop_id": "8882339",
+        "stop_sequence": "2",
+        "stop_headsign": "",
+        "pickup_type": "0",
+        "drop_off_type": "0",
+        "shape_dist_traveled": ""
+      },
+      {
+        "trip_id": "88____:007::8882362:8883006:8:603:20260821",
+        "arrival_time": "05:34:00",
+        "departure_time": "05:38:00",
+        "stop_id": "8882206",
+        "stop_sequence": "3",
+        "stop_headsign": "",
+        "pickup_type": "0",
+        "drop_off_type": "0",
+        "shape_dist_traveled": ""
+      }
+    ],
+    "pagination": {
+      "page": 0,
+      "pageSize": 5,
+      "totalRecords": 975788,
+      "totalPages": 195158,
+      "hasNextPage": true,
+      "hasPrevPage": false
+    }
+  }
+}

@@ -28,6 +28,10 @@ class TestStatus(Enum):
     SKIPPED = 'SKIPPED'
     INFO = 'INFO'
 
+
+# Prevent pytest from trying to collect this Enum as a test class.
+TestStatus.__test__ = False
+
 # Color settings for different test statuses
 TEST_COLORS = {
     TestStatus.RUNNING: Fore.BLUE + Style.BRIGHT,

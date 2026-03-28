@@ -2,7 +2,7 @@
 Middleware components for the NMBS Train Data API
 """
 import logging
-from flask import Flask, request, jsonify, redirect
+from flask import Flask
 from flask_cors import CORS
 from werkzeug.middleware.proxy_fix import ProxyFix
 
@@ -12,15 +12,32 @@ logger = logging.getLogger(__name__)
 # List of allowed domains - now allowing all hosts
 # ALLOWED_DOMAINS = ['nmbsapi.sanderzijntestjes.be', 'localhost', '127.0.0.1']
 
-def setup_middleware(app):
+def setup_middleware(app, cors_origins='*'):
     """
     Set up all middleware for the Flask app
     
     Args:
         app (Flask): The Flask application instance
+        cors_origins (str): Comma-separated list of allowed origins or '*'
     """
-    # Add CORS support
-    CORS(app)
+    # Add CORS support (configurable via CORS_ORIGINS env var)
+    if isinstance(cors_origins, str):
+        stripped = cors_origins.strip()
+        origins = '*' if stripped == '*' else [o.strip() for o in stripped.split(',') if o.strip()]
+    else:
+        origins = cors_origins
+
+    CORS(
+        app,
+        resources={
+            r"/*": {
+                "origins": origins,
+                "methods": ["GET", "POST", "OPTIONS"],
+                "allow_headers": ["Content-Type", "Authorization", "X-Requested-With", "X-API-Token"]
+            }
+        }
+    )
+    logger.info(f"CORS configured for origins: {origins}")
     
     # Add support for proxy headers
     app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1, x_host=1)

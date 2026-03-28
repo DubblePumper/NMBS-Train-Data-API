@@ -1,0 +1,43 @@
+{
+  "name": "update",
+  "method": "POST",
+  "url": "http://localhost:25580/api/update",
+  "ok": true,
+  "status": 200,
+  "fetched_at": "2026-03-28T14:08:27Z",
+  "request_body": {
+    "force": true,
+    "update_type": "realtime"
+  },
+  "response_headers": {
+    "Server": "Werkzeug/3.1.7 Python/3.14.3",
+    "Date": "Sat, 28 Mar 2026 14:08:27 GMT",
+    "Content-Type": "application/json",
+    "Content-Length": "346",
+    "Content-Security-Policy": "default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline';",
+    "X-Content-Type-Options": "nosniff",
+    "X-Frame-Options": "DENY",
+    "X-XSS-Protection": "1; mode=block",
+    "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+    "Cache-Control": "no-store, no-cache, must-revalidate, max-age=0",
+    "Pragma": "no-cache",
+    "Referrer-Policy": "strict-origin-when-cross-origin",
+    "Access-Control-Allow-Origin": "*",
+    "Connection": "close"
+  },
+  "is_json": true,
+  "body": {
+    "ok": true,
+    "metadata": {
+      "api_name": "NMBS Train Data API",
+      "version": "1.0.0",
+      "endpoint": "/api/update",
+      "data_type": "update",
+      "generated_at": "2026-03-28T14:08:22.713106"
+    },
+    "status": "success",
+    "message": "Data updated successfully",
+    "elapsed_time": 4.693696,
+    "timestamp": "2026-03-28T14:08:27.151031"
+  }
+}

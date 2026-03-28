@@ -1,0 +1,42 @@
+{
+  "name": "deprecated_data",
+  "method": "GET",
+  "url": "http://localhost:25580/api/data",
+  "ok": false,
+  "status": 410,
+  "fetched_at": "2026-03-28T14:07:12Z",
+  "request_body": null,
+  "response_headers": {
+    "Server": "Werkzeug/3.1.7 Python/3.14.3",
+    "Date": "Sat, 28 Mar 2026 14:07:12 GMT",
+    "Content-Type": "application/json",
+    "Content-Length": "497",
+    "Content-Security-Policy": "default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline';",
+    "X-Content-Type-Options": "nosniff",
+    "X-Frame-Options": "DENY",
+    "X-XSS-Protection": "1; mode=block",
+    "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+    "Cache-Control": "no-store, no-cache, must-revalidate, max-age=0",
+    "Pragma": "no-cache",
+    "Referrer-Policy": "strict-origin-when-cross-origin",
+    "Access-Control-Allow-Origin": "*",
+    "Connection": "close"
+  },
+  "is_json": true,
+  "body": {
+    "ok": false,
+    "metadata": {
+      "api_name": "NMBS Train Data API",
+      "version": "1.0.0",
+      "endpoint": "/api/data",
+      "data_type": "deprecated",
+      "generated_at": "2026-03-28T14:06:15.294794"
+    },
+    "error": "Endpoint deprecated",
+    "message": "The /api/data endpoint is no longer available. Please use the new endpoints:",
+    "new_endpoints": {
+      "realtime_data": "http://localhost:25580/api/realtime/data",
+      "planning_data": "http://localhost:25580/api/planningdata/data"
+    }
+  }
+}

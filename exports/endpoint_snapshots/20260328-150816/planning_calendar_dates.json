@@ -1,0 +1,76 @@
+{
+  "name": "planning_calendar_dates",
+  "method": "GET",
+  "url": "http://localhost:25580/api/planningdata/calendar_dates?limit=5",
+  "ok": true,
+  "status": 200,
+  "fetched_at": "2026-03-28T14:08:21Z",
+  "request_body": null,
+  "response_headers": {
+    "Server": "Werkzeug/3.1.7 Python/3.14.3",
+    "Date": "Sat, 28 Mar 2026 14:08:21 GMT",
+    "Content-Type": "application/json",
+    "Content-Length": "1015",
+    "Content-Security-Policy": "default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline';",
+    "X-Content-Type-Options": "nosniff",
+    "X-Frame-Options": "DENY",
+    "X-XSS-Protection": "1; mode=block",
+    "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+    "Cache-Control": "no-store, no-cache, must-revalidate, max-age=0",
+    "Pragma": "no-cache",
+    "Referrer-Policy": "strict-origin-when-cross-origin",
+    "Access-Control-Allow-Origin": "*",
+    "Connection": "close"
+  },
+  "is_json": true,
+  "body": {
+    "ok": true,
+    "metadata": {
+      "api_name": "NMBS Train Data API",
+      "version": "1.0.0",
+      "endpoint": "/api/planningdata/calendar_dates",
+      "data_type": "calendar_dates",
+      "generated_at": "2026-03-28T14:07:18.772662",
+      "record_count": 5,
+      "total_records": 2684860,
+      "page": 0,
+      "page_size": 5,
+      "total_pages": 536972
+    },
+    "data": [
+      {
+        "service_id": "000001",
+        "date": "20260216",
+        "exception_type": "1"
+      },
+      {
+        "service_id": "000002",
+        "date": "20260806",
+        "exception_type": "1"
+      },
+      {
+        "service_id": "000002",
+        "date": "20260807",
+        "exception_type": "1"
+      },
+      {
+        "service_id": "000002",
+        "date": "20260810",
+        "exception_type": "1"
+      },
+      {
+        "service_id": "000002",
+        "date": "20260811",
+        "exception_type": "1"
+      }
+    ],
+    "pagination": {
+      "page": 0,
+      "pageSize": 5,
+      "totalRecords": 2684860,
+      "totalPages": 536972,
+      "hasNextPage": true,
+      "hasPrevPage": false
+    }
+  }
+}

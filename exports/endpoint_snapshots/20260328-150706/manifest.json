@@ -1,0 +1,175 @@
+{
+  "exported_at": "2026-03-28T14:07:06Z",
+  "base_url": "http://localhost:25580",
+  "endpoint_count": 24,
+  "files": [
+    {
+      "name": "api_root",
+      "path": "api_root.json",
+      "status": 200,
+      "ok": true,
+      "is_json": true
+    },
+    {
+      "name": "schema_catalog",
+      "path": "schema_catalog.json",
+      "status": 200,
+      "ok": true,
+      "is_json": true
+    },
+    {
+      "name": "schema_endpoints",
+      "path": "schema_endpoints.json",
+      "status": 200,
+      "ok": true,
+      "is_json": true
+    },
+    {
+      "name": "schema_realtime",
+      "path": "schema_realtime.json",
+      "status": 200,
+      "ok": true,
+      "is_json": true
+    },
+    {
+      "name": "schema_planning_file",
+      "path": "schema_planning_file.json",
+      "status": 200,
+      "ok": true,
+      "is_json": true
+    },
+    {
+      "name": "schema_update",
+      "path": "schema_update.json",
+      "status": 200,
+      "ok": true,
+      "is_json": true
+    },
+    {
+      "name": "health",
+      "path": "health.json",
+      "status": 200,
+      "ok": true,
+      "is_json": true
+    },
+    {
+      "name": "realtime",
+      "path": "realtime.json",
+      "status": 200,
+      "ok": true,
+      "is_json": true
+    },
+    {
+      "name": "planning_files",
+      "path": "planning_files.json",
+      "status": 200,
+      "ok": true,
+      "is_json": true
+    },
+    {
+      "name": "planning_index",
+      "path": "planning_index.json",
+      "status": 200,
+      "ok": true,
+      "is_json": true
+    },
+    {
+      "name": "planning_stops",
+      "path": "planning_stops.json",
+      "status": 200,
+      "ok": true,
+      "is_json": true
+    },
+    {
+      "name": "planning_routes",
+      "path": "planning_routes.json",
+      "status": 200,
+      "ok": true,
+      "is_json": true
+    },
+    {
+      "name": "planning_calendar",
+      "path": "planning_calendar.json",
+      "status": 200,
+      "ok": true,
+      "is_json": true
+    },
+    {
+      "name": "planning_trips",
+      "path": "planning_trips.json",
+      "status": 200,
+      "ok": true,
+      "is_json": true
+    },
+    {
+      "name": "planning_stop_times",
+      "path": "planning_stop_times.json",
+      "status": 200,
+      "ok": true,
+      "is_json": true
+    },
+    {
+      "name": "planning_calendar_dates",
+      "path": "planning_calendar_dates.json",
+      "status": 200,
+      "ok": true,
+      "is_json": true
+    },
+    {
+      "name": "planning_agency",
+      "path": "planning_agency.json",
+      "status": 200,
+      "ok": true,
+      "is_json": true
+    },
+    {
+      "name": "planning_translations",
+      "path": "planning_translations.json",
+      "status": 200,
+      "ok": true,
+      "is_json": true
+    },
+    {
+      "name": "cache_index",
+      "path": "cache_index.json",
+      "status": 200,
+      "ok": true,
+      "is_json": true
+    },
+    {
+      "name": "cache_realtime",
+      "path": "cache_realtime.json",
+      "status": 200,
+      "ok": true,
+      "is_json": true
+    },
+    {
+      "name": "deprecated_data",
+      "path": "deprecated_data.json",
+      "status": 410,
+      "ok": false,
+      "is_json": true
+    },
+    {
+      "name": "security_audit",
+      "path": "security_audit.json",
+      "status": 200,
+      "ok": true,
+      "is_json": true
+    },
+    {
+      "name": "trajectories",
+      "path": "trajectories.json",
+      "status": 200,
+      "ok": true,
+      "is_json": true
+    },
+    {
+      "name": "update",
+      "path": "update.json",
+      "status": 200,
+      "ok": true,
+      "is_json": true
+    }
+  ]
+}

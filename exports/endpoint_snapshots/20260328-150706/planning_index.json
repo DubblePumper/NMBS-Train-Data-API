@@ -1,0 +1,110 @@
+{
+  "name": "planning_index",
+  "method": "GET",
+  "url": "http://localhost:25580/api/planningdata/data",
+  "ok": true,
+  "status": 200,
+  "fetched_at": "2026-03-28T14:07:07Z",
+  "request_body": null,
+  "response_headers": {
+    "Server": "Werkzeug/3.1.7 Python/3.14.3",
+    "Date": "Sat, 28 Mar 2026 14:07:07 GMT",
+    "Content-Type": "application/json",
+    "Content-Length": "2647",
+    "Content-Security-Policy": "default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline';",
+    "X-Content-Type-Options": "nosniff",
+    "X-Frame-Options": "DENY",
+    "X-XSS-Protection": "1; mode=block",
+    "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+    "Cache-Control": "no-store, no-cache, must-revalidate, max-age=0",
+    "Pragma": "no-cache",
+    "Referrer-Policy": "strict-origin-when-cross-origin",
+    "Access-Control-Allow-Origin": "*",
+    "Connection": "close"
+  },
+  "is_json": true,
+  "body": {
+    "ok": true,
+    "metadata": {
+      "api_name": "NMBS Train Data API",
+      "version": "1.0.0",
+      "endpoint": "/api/planningdata/data",
+      "data_type": "planning_index",
+      "generated_at": "2026-03-28T14:06:15.294794",
+      "record_count": 11
+    },
+    "message": "Planning data available at the following endpoints",
+    "files": [
+      "agency.txt",
+      "calendar.txt",
+      "calendar_dates.txt",
+      "feed_info.txt",
+      "routes.txt",
+      "stops.txt",
+      "stop_times.txt",
+      "stop_time_overrides.txt",
+      "transfers.txt",
+      "translations.txt",
+      "trips.txt"
+    ],
+    "endpoints": {
+      "agency": "http://localhost:25580/api/planningdata/agency",
+      "calendar": "http://localhost:25580/api/planningdata/calendar",
+      "calendar_dates": "http://localhost:25580/api/planningdata/calendar_dates",
+      "feed_info": "http://localhost:25580/api/planningdata/feed_info",
+      "routes": "http://localhost:25580/api/planningdata/routes",
+      "stops": "http://localhost:25580/api/planningdata/stops",
+      "stop_times": "http://localhost:25580/api/planningdata/stop_times",
+      "stop_time_overrides": "http://localhost:25580/api/planningdata/stop_time_overrides",
+      "transfers": "http://localhost:25580/api/planningdata/transfers",
+      "translations": "http://localhost:25580/api/planningdata/translations",
+      "trips": "http://localhost:25580/api/planningdata/trips"
+    },
+    "data": [
+      {
+        "file": "agency.txt",
+        "endpoint": "http://localhost:25580/api/planningdata/agency"
+      },
+      {
+        "file": "calendar.txt",
+        "endpoint": "http://localhost:25580/api/planningdata/calendar"
+      },
+      {
+        "file": "calendar_dates.txt",
+        "endpoint": "http://localhost:25580/api/planningdata/calendar_dates"
+      },
+      {
+        "file": "feed_info.txt",
+        "endpoint": "http://localhost:25580/api/planningdata/feed_info"
+      },
+      {
+        "file": "routes.txt",
+        "endpoint": "http://localhost:25580/api/planningdata/routes"
+      },
+      {
+        "file": "stops.txt",
+        "endpoint": "http://localhost:25580/api/planningdata/stops"
+      },
+      {
+        "file": "stop_times.txt",
+        "endpoint": "http://localhost:25580/api/planningdata/stop_times"
+      },
+      {
+        "file": "stop_time_overrides.txt",
+        "endpoint": "http://localhost:25580/api/planningdata/stop_time_overrides"
+      },
+      {
+        "file": "transfers.txt",
+        "endpoint": "http://localhost:25580/api/planningdata/transfers"
+      },
+      {
+        "file": "translations.txt",
+        "endpoint": "http://localhost:25580/api/planningdata/translations"
+      },
+      {
+        "file": "trips.txt",
+        "endpoint": "http://localhost:25580/api/planningdata/trips"
+      }
+    ]
+  }
+}

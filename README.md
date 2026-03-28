@@ -53,6 +53,48 @@ cd nmbs-train-data-api
 pip install -e .
 ```
 
+## 🗂️ Projectstructuur (gecentraliseerd)
+
+De code is nu centraal georganiseerd onder `src/nmbs_api/` met duidelijke submappen:
+
+```text
+src/
+  nmbs_api/
+    api.py
+    data_service.py
+    cli/
+      service_runner.py
+      web_runner.py
+    search/
+      engine.py
+    services/
+      ...
+    web/
+      ...
+    tests/
+      ...
+```
+
+Root-bestanden zoals `service.py`, `run_web_api.py` en `api_search.py` blijven beschikbaar als compatibiliteits-wrappers.
+Er is nu één root-startbestand: `start.py`.
+
+## 🐳 Docker Compose (Python 3.14.3)
+
+Je kunt de API het makkelijkst draaien via Docker Compose. De container gebruikt Python **3.14.3**.
+
+```bash
+# Start de API (incl. dataservice)
+docker compose up -d --build
+
+# Bekijk logs
+docker compose logs -f
+
+# Stoppen
+docker compose down
+```
+
+De API is daarna beschikbaar op: `http://localhost:25580/api/health`
+
 ## ⚙️ Configuratie
 
 Maak een `.env` bestand aan in de hoofdmap met de volgende inhoud:
@@ -72,30 +114,79 @@ API_HOST=0.0.0.0
 
 Je kunt de `API_PORT` waarde eenvoudig aanpassen om te wijzigen op welke poort de web API draait.
 
+## 🧩 Gestandaardiseerd JSON-formaat
+
+Bijna alle API-endpoints gebruiken nu een uniform JSON-formaat:
+
+- `ok` (boolean): success/failure indicator
+- `metadata` (object): endpoint, versie, data_type, generated_at, record/paginatie info
+- `data` (object/array): payload voor de client
+- `error` + `message` bij fouten
+
+Voorbeeld:
+
+```json
+{
+  "ok": true,
+  "metadata": {
+    "api_name": "NMBS Train Data API",
+    "version": "1.0.0",
+    "endpoint": "/api/planningdata/stops",
+    "data_type": "stops",
+    "generated_at": "2026-03-28T13:00:00Z",
+    "record_count": 5
+  },
+  "data": []
+}
+```
+
+Uitzondering: `/metrics` is Prometheus plaintext (geen JSON).
+
+## 🧱 API Schema Catalog (versioned)
+
+Voor app-ontwikkeling en typed clients kun je de schema catalog gebruiken:
+
+- `GET /api/schema` → catalog met versie + links naar endpoint schema's
+- `GET /api/schema/endpoints` → lijst van beschikbare schema-id's
+- `GET /api/schema/<schema_id>` → schema van één endpoint
+
+Voorbeeld:
+
+```text
+/api/schema
+/api/schema/endpoints
+/api/schema/realtime_data
+/api/schema/planning_file
+/api/schema/update
+```
+
 ## 🔧 Gebruik
 
-### Als zelfstandige service
+### Start alles met één bestand
 
-Je kunt de API als een zelfstandige service draaien die continu de nieuwste gegevens ophaalt:
+Gebruik één bestand om API + dataservice tegelijk te starten (ingelezen via `.env`):
 
 ```bash
-# Draaien met standaardinstellingen (elke 30 seconden downloaden, website eenmaal per dag scrapen)
-python service.py
+# Start alles (API + dataservice)
+python start.py
 
-# Draaien met aangepaste intervallen
-python service.py --interval 30 --scrape-interval 43200 --data-dir my_data_folder
+# Aangepaste host/poort/debug (args worden doorgegeven)
+python start.py --host 127.0.0.1 --port 8080 --debug
+
+# Alleen web API opstarten (zonder dataservice)
+python start.py --web-only
 ```
 
 ### Als Web API
 
-Je kunt de API als webserver draaien die endpoints biedt voor toegang tot de gegevens:
+Voor losse CLI-start buiten `start.py` kun je nog package entrypoints gebruiken:
 
 ```bash
-# De web API draaien met standaardinstellingen (host en poort uit .env bestand)
-python run_web_api.py
+# Web API runner
+nmbs-web-api
 
-# Draaien met aangepaste host en poort
-python run_web_api.py --host 127.0.0.1 --port 8080 --debug
+# Data service runner
+nmbs-data-service
 ```
 
 ### In je applicatie
@@ -133,15 +224,16 @@ Je kunt de NMBS Train Data API vanaf je Pelican panel benaderen door HTTP-verzoe
 
 Vervang `<server-ip>` door het IP-adres van de computer waarop de API draait en `<port>` door de poort die in je `.env` bestand is opgegeven (standaard: 25580).
 
-## ⚡ Service-opties
+## ⚡ Start-opties
 
-De zelfstandige service (`service.py`) accepteert de volgende command-line opties:
+`start.py` gebruikt `.env` en geeft CLI-argumenten door aan de web runner.
 
 | Optie | Beschrijving | Standaardwaarde |
 |-------|--------------|-----------------|
-| `--interval` | Tijd in seconden tussen gegevensdownloads | 30 |
+| `--web-only` | Start alleen de web API zonder dataservice | uit |
+| `--interval` | Alias voor `--data-interval` | 60 |
+| `--data-interval` | Tijd in seconden tussen gegevensdownloads | 60 |
 | `--scrape-interval` | Tijd in seconden tussen webscraping-operaties | 86400 (eenmaal per dag) |
-| `--log-file` | Pad naar het logbestand | nmbs_service.log |
 | `--data-dir` | Directory om gegevensbestanden op te slaan | data |
 
 ## 📚 API Referentie
@@ -486,6 +578,47 @@ cd nmbs-train-data-api
 pip install -e .
 ```
 
+## 🗂️ Project Structure (centralized)
+
+The code is now centralized under `src/nmbs_api/` with clear subfolders:
+
+```text
+src/
+  nmbs_api/
+    api.py
+    data_service.py
+    cli/
+      service_runner.py
+      web_runner.py
+    search/
+      engine.py
+    services/
+      ...
+    web/
+      ...
+    tests/
+      ...
+```
+
+There is now a single root startup file: `start.py`.
+
+## 🐳 Docker Compose (Python 3.14.3)
+
+The easiest way to run this API is with Docker Compose. The container uses Python **3.14.3**.
+
+```bash
+# Start API (including data service)
+docker compose up -d --build
+
+# Follow logs
+docker compose logs -f
+
+# Stop
+docker compose down
+```
+
+API endpoint: `http://localhost:25580/api/health`
+
 ## ⚙️ Configuration
 
 Create a `.env` file in the root directory with the following content:
@@ -505,30 +638,79 @@ API_HOST=0.0.0.0
 
 You can easily adjust the `API_PORT` value to change which port the web API runs on.
 
+## 🧩 Standardized JSON format
+
+Almost all API endpoints now use a uniform JSON contract:
+
+- `ok` (boolean): success/failure indicator
+- `metadata` (object): endpoint, version, data_type, generated_at, record/pagination info
+- `data` (object/array): payload for the client
+- `error` + `message` for failures
+
+Example:
+
+```json
+{
+  "ok": true,
+  "metadata": {
+    "api_name": "NMBS Train Data API",
+    "version": "1.0.0",
+    "endpoint": "/api/planningdata/stops",
+    "data_type": "stops",
+    "generated_at": "2026-03-28T13:00:00Z",
+    "record_count": 5
+  },
+  "data": []
+}
+```
+
+Exception: `/metrics` is Prometheus plaintext (not JSON).
+
+## 🧱 API Schema Catalog (versioned)
+
+For app development and typed clients, use the schema catalog endpoints:
+
+- `GET /api/schema` → catalog with version + links to endpoint schemas
+- `GET /api/schema/endpoints` → list of available schema ids
+- `GET /api/schema/<schema_id>` → schema for one endpoint
+
+Example:
+
+```text
+/api/schema
+/api/schema/endpoints
+/api/schema/realtime_data
+/api/schema/planning_file
+/api/schema/update
+```
+
 ## 🔧 Usage
 
-### As a Standalone Service
+### Start everything with one file
 
-You can run the API as a standalone service that continuously fetches the latest data:
+Use one file to start API + data service together (using `.env`):
 
 ```bash
-# Run with default settings (download every 30 seconds, scrape website once a day)
-python service.py
+# Start everything (API + data service)
+python start.py
 
-# Run with custom intervals
-python service.py --interval 30 --scrape-interval 43200 --data-dir my_data_folder
+# Custom host/port/debug (arguments are forwarded)
+python start.py --host 127.0.0.1 --port 8080 --debug
+
+# Start web API only (without data service)
+python start.py --web-only
 ```
 
 ### As a Web API
 
-You can run the API as a web server that provides endpoints for accessing the data:
+For separate CLI startup outside `start.py`, package entrypoints are still available:
 
 ```bash
-# Run the web API with default settings (host and port from .env file)
-python run_web_api.py
+# Web API runner
+nmbs-web-api
 
-# Run with custom host and port
-python run_web_api.py --host 127.0.0.1 --port 8080 --debug
+# Data service runner
+nmbs-data-service
 ```
 
 ### In Your Application
@@ -566,15 +748,16 @@ You can access the NMBS Train Data API from your Pelican panel by setting up HTT
 
 Replace `<server-ip>` with the IP address of the computer running the API and `<port>` with the port specified in your `.env` file (default: 25580).
 
-## ⚡ Service Options
+## ⚡ Start Options
 
-The standalone service (`service.py`) accepts the following command-line options:
+`start.py` uses `.env` and forwards CLI arguments to the web runner.
 
 | Option | Description | Default Value |
 |--------|-------------|---------------|
-| `--interval` | Time in seconds between data downloads | 30 |
+| `--web-only` | Start web API only without data service | off |
+| `--interval` | Alias for `--data-interval` | 60 |
+| `--data-interval` | Time in seconds between data downloads | 60 |
 | `--scrape-interval` | Time in seconds between web scraping operations | 86400 (once per day) |
-| `--log-file` | Path to the log file | nmbs_service.log |
 | `--data-dir` | Directory to store data files | data |
 
 ## 📚 API Reference

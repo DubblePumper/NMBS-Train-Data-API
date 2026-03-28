@@ -1,0 +1,111 @@
+{
+  "name": "planning_calendar",
+  "method": "GET",
+  "url": "http://localhost:25580/api/planningdata/calendar?limit=5",
+  "ok": true,
+  "status": 200,
+  "fetched_at": "2026-03-28T14:07:07Z",
+  "request_body": null,
+  "response_headers": {
+    "Server": "Werkzeug/3.1.7 Python/3.14.3",
+    "Date": "Sat, 28 Mar 2026 14:07:07 GMT",
+    "Content-Type": "application/json",
+    "Content-Length": "1680",
+    "Content-Security-Policy": "default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline';",
+    "X-Content-Type-Options": "nosniff",
+    "X-Frame-Options": "DENY",
+    "X-XSS-Protection": "1; mode=block",
+    "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+    "Cache-Control": "no-store, no-cache, must-revalidate, max-age=0",
+    "Pragma": "no-cache",
+    "Referrer-Policy": "strict-origin-when-cross-origin",
+    "Access-Control-Allow-Origin": "*",
+    "Connection": "close"
+  },
+  "is_json": true,
+  "body": {
+    "ok": true,
+    "metadata": {
+      "api_name": "NMBS Train Data API",
+      "version": "1.0.0",
+      "endpoint": "/api/planningdata/calendar",
+      "data_type": "calendar",
+      "generated_at": "2026-03-28T14:06:15.294794",
+      "record_count": 5,
+      "total_records": 22881,
+      "page": 0,
+      "page_size": 5,
+      "total_pages": 4577
+    },
+    "data": [
+      {
+        "service_id": 1,
+        "monday": 0,
+        "tuesday": 0,
+        "wednesday": 0,
+        "thursday": 0,
+        "friday": 0,
+        "saturday": 0,
+        "sunday": 0,
+        "start_date": 20260125,
+        "end_date": 20261212
+      },
+      {
+        "service_id": 2,
+        "monday": 0,
+        "tuesday": 0,
+        "wednesday": 0,
+        "thursday": 0,
+        "friday": 0,
+        "saturday": 0,
+        "sunday": 0,
+        "start_date": 20260125,
+        "end_date": 20261212
+      },
+      {
+        "service_id": 3,
+        "monday": 0,
+        "tuesday": 0,
+        "wednesday": 0,
+        "thursday": 0,
+        "friday": 0,
+        "saturday": 0,
+        "sunday": 0,
+        "start_date": 20260125,
+        "end_date": 20261212
+      },
+      {
+        "service_id": 4,
+        "monday": 0,
+        "tuesday": 0,
+        "wednesday": 0,
+        "thursday": 0,
+        "friday": 0,
+        "saturday": 0,
+        "sunday": 0,
+        "start_date": 20260125,
+        "end_date": 20261212
+      },
+      {
+        "service_id": 5,
+        "monday": 0,
+        "tuesday": 0,
+        "wednesday": 0,
+        "thursday": 0,
+        "friday": 0,
+        "saturday": 0,
+        "sunday": 0,
+        "start_date": 20260125,
+        "end_date": 20261212
+      }
+    ],
+    "pagination": {
+      "page": 0,
+      "pageSize": 5,
+      "totalRecords": 22881,
+      "totalPages": 4577,
+      "hasNextPage": true,
+      "hasPrevPage": false
+    }
+  }
+}

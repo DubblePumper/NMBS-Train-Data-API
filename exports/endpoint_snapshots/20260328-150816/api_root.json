@@ -1,0 +1,46 @@
+{
+  "name": "api_root",
+  "method": "GET",
+  "url": "http://localhost:25580/api/",
+  "ok": true,
+  "status": 200,
+  "fetched_at": "2026-03-28T14:08:16Z",
+  "request_body": null,
+  "response_headers": {
+    "Server": "Werkzeug/3.1.7 Python/3.14.3",
+    "Date": "Sat, 28 Mar 2026 14:08:16 GMT",
+    "Content-Type": "application/json",
+    "Content-Length": "676",
+    "Content-Security-Policy": "default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline';",
+    "X-Content-Type-Options": "nosniff",
+    "X-Frame-Options": "DENY",
+    "X-XSS-Protection": "1; mode=block",
+    "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+    "Cache-Control": "no-store, no-cache, must-revalidate, max-age=0",
+    "Pragma": "no-cache",
+    "Referrer-Policy": "strict-origin-when-cross-origin",
+    "Access-Control-Allow-Origin": "*",
+    "Connection": "close"
+  },
+  "is_json": true,
+  "body": {
+    "ok": true,
+    "metadata": {
+      "api_name": "NMBS Train Data API",
+      "version": "1.0.0",
+      "endpoint": "/api",
+      "data_type": "index",
+      "generated_at": "2026-03-28T14:07:18.772662"
+    },
+    "message": "NMBS Train Data API",
+    "endpoints": {
+      "health": "http://localhost:25580/api/health",
+      "realtime": "http://localhost:25580/api/realtime/data",
+      "planning_files": "http://localhost:25580/api/planningdata/files",
+      "trajectories": "http://localhost:25580/api/trajectories",
+      "schema_catalog": "http://localhost:25580/api/schema",
+      "schema_list": "http://localhost:25580/api/schema/endpoints",
+      "metrics": "http://localhost:25580/metrics"
+    }
+  }
+}

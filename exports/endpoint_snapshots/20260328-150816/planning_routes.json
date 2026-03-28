@@ -1,0 +1,106 @@
+{
+  "name": "planning_routes",
+  "method": "GET",
+  "url": "http://localhost:25580/api/planningdata/routes?limit=5",
+  "ok": true,
+  "status": 200,
+  "fetched_at": "2026-03-28T14:08:16Z",
+  "request_body": null,
+  "response_headers": {
+    "Server": "Werkzeug/3.1.7 Python/3.14.3",
+    "Date": "Sat, 28 Mar 2026 14:08:16 GMT",
+    "Content-Type": "application/json",
+    "Content-Length": "1920",
+    "Content-Security-Policy": "default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline';",
+    "X-Content-Type-Options": "nosniff",
+    "X-Frame-Options": "DENY",
+    "X-XSS-Protection": "1; mode=block",
+    "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+    "Cache-Control": "no-store, no-cache, must-revalidate, max-age=0",
+    "Pragma": "no-cache",
+    "Referrer-Policy": "strict-origin-when-cross-origin",
+    "Access-Control-Allow-Origin": "*",
+    "Connection": "close"
+  },
+  "is_json": true,
+  "body": {
+    "ok": true,
+    "metadata": {
+      "api_name": "NMBS Train Data API",
+      "version": "1.0.0",
+      "endpoint": "/api/planningdata/routes",
+      "data_type": "routes",
+      "generated_at": "2026-03-28T14:07:18.772662",
+      "record_count": 5,
+      "total_records": 1372,
+      "page": 0,
+      "page_size": 5,
+      "total_pages": 275
+    },
+    "data": [
+      {
+        "route_id": 1,
+        "agency_id": "NMBS/SNCB",
+        "route_short_name": "L",
+        "route_long_name": "Malines -- Muizen",
+        "route_desc": null,
+        "route_type": 100,
+        "route_url": null,
+        "route_color": null,
+        "route_text_color": null
+      },
+      {
+        "route_id": 10,
+        "agency_id": "NMBS/SNCB",
+        "route_short_name": "IC",
+        "route_long_name": "Courtrai -- Poperinge",
+        "route_desc": null,
+        "route_type": 103,
+        "route_url": null,
+        "route_color": null,
+        "route_text_color": null
+      },
+      {
+        "route_id": 100,
+        "agency_id": "NMBS/SNCB",
+        "route_short_name": "IC",
+        "route_long_name": "Hasselt -- Landen",
+        "route_desc": null,
+        "route_type": 103,
+        "route_url": null,
+        "route_color": null,
+        "route_text_color": null
+      },
+      {
+        "route_id": 1000,
+        "agency_id": "NMBS/SNCB",
+        "route_short_name": "BUS",
+        "route_long_name": "Courtrai -- Menin",
+        "route_desc": null,
+        "route_type": 700,
+        "route_url": null,
+        "route_color": null,
+        "route_text_color": null
+      },
+      {
+        "route_id": 1001,
+        "agency_id": "NMBS/SNCB",
+        "route_short_name": "BUS",
+        "route_long_name": "Lille Flandres (FR) -- Courtrai",
+        "route_desc": null,
+        "route_type": 700,
+        "route_url": null,
+        "route_color": null,
+        "route_text_color": null
+      }
+    ],
+    "pagination": {
+      "page": 0,
+      "pageSize": 5,
+      "totalRecords": 1372,
+      "totalPages": 275,
+      "hasNextPage": true,
+      "hasPrevPage": false
+    }
+  }
+}

@@ -1,0 +1,96 @@
+{
+  "name": "planning_translations",
+  "method": "GET",
+  "url": "http://localhost:25580/api/planningdata/translations?limit=5",
+  "ok": true,
+  "status": 200,
+  "fetched_at": "2026-03-28T14:08:21Z",
+  "request_body": null,
+  "response_headers": {
+    "Server": "Werkzeug/3.1.7 Python/3.14.3",
+    "Date": "Sat, 28 Mar 2026 14:08:21 GMT",
+    "Content-Type": "application/json",
+    "Content-Length": "1620",
+    "Content-Security-Policy": "default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline';",
+    "X-Content-Type-Options": "nosniff",
+    "X-Frame-Options": "DENY",
+    "X-XSS-Protection": "1; mode=block",
+    "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+    "Cache-Control": "no-store, no-cache, must-revalidate, max-age=0",
+    "Pragma": "no-cache",
+    "Referrer-Policy": "strict-origin-when-cross-origin",
+    "Access-Control-Allow-Origin": "*",
+    "Connection": "close"
+  },
+  "is_json": true,
+  "body": {
+    "ok": true,
+    "metadata": {
+      "api_name": "NMBS Train Data API",
+      "version": "1.0.0",
+      "endpoint": "/api/planningdata/translations",
+      "data_type": "translations",
+      "generated_at": "2026-03-28T14:07:18.772662",
+      "record_count": 5,
+      "total_records": 2433,
+      "page": 0,
+      "page_size": 5,
+      "total_pages": 487
+    },
+    "data": [
+      {
+        "table_name": "stops",
+        "field_name": "stop_name",
+        "language": "nl",
+        "translation": "Ingelmunster",
+        "record_id": null,
+        "record_sub_id": null,
+        "field_value": "Ingelmunster"
+      },
+      {
+        "table_name": "stops",
+        "field_name": "stop_name",
+        "language": "de",
+        "translation": "Ingelmunster",
+        "record_id": null,
+        "record_sub_id": null,
+        "field_value": "Ingelmunster"
+      },
+      {
+        "table_name": "stops",
+        "field_name": "stop_name",
+        "language": "en",
+        "translation": "Ingelmunster",
+        "record_id": null,
+        "record_sub_id": null,
+        "field_value": "Ingelmunster"
+      },
+      {
+        "table_name": "stops",
+        "field_name": "stop_name",
+        "language": "nl",
+        "translation": "Izegem",
+        "record_id": null,
+        "record_sub_id": null,
+        "field_value": "Izegem"
+      },
+      {
+        "table_name": "stops",
+        "field_name": "stop_name",
+        "language": "de",
+        "translation": "Izegem",
+        "record_id": null,
+        "record_sub_id": null,
+        "field_value": "Izegem"
+      }
+    ],
+    "pagination": {
+      "page": 0,
+      "pageSize": 5,
+      "totalRecords": 2433,
+      "totalPages": 487,
+      "hasNextPage": true,
+      "hasPrevPage": false
+    }
+  }
+}

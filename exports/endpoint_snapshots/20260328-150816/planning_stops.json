@@ -1,0 +1,121 @@
+{
+  "name": "planning_stops",
+  "method": "GET",
+  "url": "http://localhost:25580/api/planningdata/stops?limit=5",
+  "ok": true,
+  "status": 200,
+  "fetched_at": "2026-03-28T14:08:16Z",
+  "request_body": null,
+  "response_headers": {
+    "Server": "Werkzeug/3.1.7 Python/3.14.3",
+    "Date": "Sat, 28 Mar 2026 14:08:16 GMT",
+    "Content-Type": "application/json",
+    "Content-Length": "2221",
+    "Content-Security-Policy": "default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline';",
+    "X-Content-Type-Options": "nosniff",
+    "X-Frame-Options": "DENY",
+    "X-XSS-Protection": "1; mode=block",
+    "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+    "Cache-Control": "no-store, no-cache, must-revalidate, max-age=0",
+    "Pragma": "no-cache",
+    "Referrer-Policy": "strict-origin-when-cross-origin",
+    "Access-Control-Allow-Origin": "*",
+    "Connection": "close"
+  },
+  "is_json": true,
+  "body": {
+    "ok": true,
+    "metadata": {
+      "api_name": "NMBS Train Data API",
+      "version": "1.0.0",
+      "endpoint": "/api/planningdata/stops",
+      "data_type": "stops",
+      "generated_at": "2026-03-28T14:07:18.772662",
+      "record_count": 5,
+      "total_records": 2762,
+      "page": 0,
+      "page_size": 5,
+      "total_pages": 553
+    },
+    "data": [
+      {
+        "stop_id": "8015190",
+        "stop_code": null,
+        "stop_name": "Herzogenrath",
+        "stop_desc": null,
+        "stop_lat": 50.8709,
+        "stop_lon": 6.0944,
+        "zone_id": null,
+        "stop_url": null,
+        "location_type": 0,
+        "parent_station": null,
+        "platform_code": null,
+        "stop_timezone": null
+      },
+      {
+        "stop_id": "8015199",
+        "stop_code": null,
+        "stop_name": "Aix-la-Chapelle Ouest",
+        "stop_desc": null,
+        "stop_lat": 50.78078,
+        "stop_lon": 6.07055,
+        "zone_id": null,
+        "stop_url": null,
+        "location_type": 0,
+        "parent_station": null,
+        "platform_code": null,
+        "stop_timezone": null
+      },
+      {
+        "stop_id": "8015321",
+        "stop_code": null,
+        "stop_name": "KOLN-EHRENFELD",
+        "stop_desc": null,
+        "stop_lat": 50.951538,
+        "stop_lon": 6.914889,
+        "zone_id": null,
+        "stop_url": null,
+        "location_type": 0,
+        "parent_station": null,
+        "platform_code": null,
+        "stop_timezone": null
+      },
+      {
+        "stop_id": "8015345",
+        "stop_code": null,
+        "stop_name": "Aachen Hbf (DE)",
+        "stop_desc": null,
+        "stop_lat": 50.76776,
+        "stop_lon": 6.09139,
+        "zone_id": null,
+        "stop_url": null,
+        "location_type": 0,
+        "parent_station": null,
+        "platform_code": null,
+        "stop_timezone": null
+      },
+      {
+        "stop_id": "8015458",
+        "stop_code": null,
+        "stop_name": "Köln Hbf (DE)",
+        "stop_desc": null,
+        "stop_lat": 50.94308,
+        "stop_lon": 6.95897,
+        "zone_id": null,
+        "stop_url": null,
+        "location_type": 0,
+        "parent_station": null,
+        "platform_code": null,
+        "stop_timezone": null
+      }
+    ],
+    "pagination": {
+      "page": 0,
+      "pageSize": 5,
+      "totalRecords": 2762,
+      "totalPages": 553,
+      "hasNextPage": true,
+      "hasPrevPage": false
+    }
+  }
+}

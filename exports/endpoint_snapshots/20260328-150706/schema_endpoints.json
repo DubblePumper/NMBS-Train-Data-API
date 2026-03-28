@@ -1,0 +1,111 @@
+{
+  "name": "schema_endpoints",
+  "method": "GET",
+  "url": "http://localhost:25580/api/schema/endpoints",
+  "ok": true,
+  "status": 200,
+  "fetched_at": "2026-03-28T14:07:06Z",
+  "request_body": null,
+  "response_headers": {
+    "Server": "Werkzeug/3.1.7 Python/3.14.3",
+    "Date": "Sat, 28 Mar 2026 14:07:06 GMT",
+    "Content-Type": "application/json",
+    "Content-Length": "2465",
+    "Content-Security-Policy": "default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline';",
+    "X-Content-Type-Options": "nosniff",
+    "X-Frame-Options": "DENY",
+    "X-XSS-Protection": "1; mode=block",
+    "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+    "Cache-Control": "no-store, no-cache, must-revalidate, max-age=0",
+    "Pragma": "no-cache",
+    "Referrer-Policy": "strict-origin-when-cross-origin",
+    "Access-Control-Allow-Origin": "*",
+    "Connection": "close"
+  },
+  "is_json": true,
+  "body": {
+    "ok": true,
+    "metadata": {
+      "api_name": "NMBS Train Data API",
+      "version": "1.0.0",
+      "endpoint": "/api/schema/endpoints",
+      "data_type": "schema_index",
+      "generated_at": "2026-03-28T14:06:15.294794",
+      "record_count": 10
+    },
+    "schema_spec_version": "1.0.0",
+    "api_version": "1.0.0",
+    "data": [
+      {
+        "id": "cache_index",
+        "method": "GET",
+        "path": "/api/cache",
+        "description": "List available cache payloads",
+        "schema_url": "http://localhost:25580/api/schema/cache_index"
+      },
+      {
+        "id": "cache_item",
+        "method": "GET",
+        "path": "/api/cache/<data_type>",
+        "description": "Fetch cache payload by type",
+        "schema_url": "http://localhost:25580/api/schema/cache_item"
+      },
+      {
+        "id": "health",
+        "method": "GET",
+        "path": "/api/health",
+        "description": "Health status",
+        "schema_url": "http://localhost:25580/api/schema/health"
+      },
+      {
+        "id": "index",
+        "method": "GET",
+        "path": "/api/",
+        "description": "API index with quick links",
+        "schema_url": "http://localhost:25580/api/schema/index"
+      },
+      {
+        "id": "planning_file",
+        "method": "GET",
+        "path": "/api/planningdata/<filename>",
+        "description": "Planning data with pagination/filtering",
+        "schema_url": "http://localhost:25580/api/schema/planning_file"
+      },
+      {
+        "id": "planning_files",
+        "method": "GET",
+        "path": "/api/planningdata/files",
+        "description": "Available planning files",
+        "schema_url": "http://localhost:25580/api/schema/planning_files"
+      },
+      {
+        "id": "realtime_data",
+        "method": "GET",
+        "path": "/api/realtime/data",
+        "description": "Real-time train data",
+        "schema_url": "http://localhost:25580/api/schema/realtime_data"
+      },
+      {
+        "id": "security_audit",
+        "method": "GET",
+        "path": "/api/security/audit",
+        "description": "Security checks/audit result",
+        "schema_url": "http://localhost:25580/api/schema/security_audit"
+      },
+      {
+        "id": "trajectories",
+        "method": "GET",
+        "path": "/api/trajectories",
+        "description": "Combined trajectory data",
+        "schema_url": "http://localhost:25580/api/schema/trajectories"
+      },
+      {
+        "id": "update",
+        "method": "POST",
+        "path": "/api/update",
+        "description": "Force data refresh",
+        "schema_url": "http://localhost:25580/api/schema/update"
+      }
+    ]
+  }
+}

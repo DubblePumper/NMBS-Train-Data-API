@@ -3,14 +3,12 @@ Main module for the NMBS Train Data API web server
 """
 import os
 import logging
-import ssl
 from flask import Flask, jsonify
-from flask_cors import CORS
 from dotenv import load_dotenv
 from .middleware import setup_middleware
 from .routes import api_routes
 from .cache import CacheManager
-from .security import setup_security, run_security_audit
+from .security import setup_security
 from .monitoring import setup_request_monitoring, register_metrics_endpoint
 from ..api import start_data_service
 
@@ -23,25 +21,18 @@ load_dotenv()
 # Create cache manager instance
 cache_manager = CacheManager(data_dir='data')
 
-def create_app():
+def create_app(start_background_service=True):
     """
     Create and configure the Flask application
+
+    Args:
+        start_background_service (bool): Whether to start the background data service thread
     
     Returns:
         Flask: The configured Flask application
     """
     # Create Flask app
     app = Flask(__name__)
-    
-    # Set up CORS - Toegang voor alle oorsprong toestaan
-    CORS(app, resources={
-        r"/*": {
-            "origins": "*",  # Voor open API toegang
-            "methods": ["GET", "POST", "OPTIONS"],
-            "allow_headers": ["Content-Type", "Authorization", "X-Requested-With"]
-        }
-    })
-    logger.info("CORS configuratie toegepast: open toegang voor alle oorsprong")
     
     # Configure JSON pretty printing in a compatible way
     app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
@@ -63,7 +54,7 @@ def create_app():
         }
     
     # Set up middleware
-    setup_middleware(app)
+    setup_middleware(app, cors_origins=os.getenv('CORS_ORIGINS', '*'))
     
     # Set up security features
     setup_security(app)
@@ -76,9 +67,12 @@ def create_app():
     register_metrics_endpoint(app)
     logger.info("Monitoring systeem en /metrics endpoint ingeschakeld")
     
-    # Start the data service in the background
-    logger.info("Starting NMBS data service...")
-    data_service_thread = start_data_service()
+    # Start the data service in the background (optional)
+    if start_background_service:
+        logger.info("Starting NMBS data service...")
+        start_data_service()
+    else:
+        logger.info("Background data service startup skipped (externally managed)")
     
     # Start the cache update thread
     cache_thread = cache_manager.start_cache_thread()
@@ -86,7 +80,7 @@ def create_app():
     logger.info("NMBS Web API initialized successfully")
     return app
 
-def start_web_server(host='0.0.0.0', port=5000, debug=False, ssl_context=None):
+def start_web_server(host='0.0.0.0', port=5000, debug=False, ssl_context=None, start_background_service=True):
     """
     Start the Flask web server
     
@@ -95,9 +89,10 @@ def start_web_server(host='0.0.0.0', port=5000, debug=False, ssl_context=None):
         port (int): Port to bind to
         debug (bool): Whether to run in debug mode
         ssl_context: SSL context for HTTPS support, tuple of (cert, key) paths or 'adhoc'
+        start_background_service (bool): Whether to start the data service thread
     """
     # Create the app
-    app = create_app()
+    app = create_app(start_background_service=start_background_service)
     
     # Use the port from .env if not specified
     if port == 5000:

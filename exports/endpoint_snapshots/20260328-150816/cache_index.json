@@ -1,0 +1,129 @@
+{
+  "name": "cache_index",
+  "method": "GET",
+  "url": "http://localhost:25580/api/cache",
+  "ok": true,
+  "status": 200,
+  "fetched_at": "2026-03-28T14:08:21Z",
+  "request_body": null,
+  "response_headers": {
+    "Server": "Werkzeug/3.1.7 Python/3.14.3",
+    "Date": "Sat, 28 Mar 2026 14:08:21 GMT",
+    "Content-Type": "application/json",
+    "Content-Length": "3233",
+    "Content-Security-Policy": "default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline';",
+    "X-Content-Type-Options": "nosniff",
+    "X-Frame-Options": "DENY",
+    "X-XSS-Protection": "1; mode=block",
+    "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+    "Cache-Control": "no-store, no-cache, must-revalidate, max-age=0",
+    "Pragma": "no-cache",
+    "Referrer-Policy": "strict-origin-when-cross-origin",
+    "Access-Control-Allow-Origin": "*",
+    "Connection": "close"
+  },
+  "is_json": true,
+  "body": {
+    "ok": true,
+    "metadata": {
+      "api_name": "NMBS Train Data API",
+      "version": "1.0.0",
+      "endpoint": "/api/cache",
+      "data_type": "cache_index",
+      "generated_at": "2026-03-28T14:07:18.772662",
+      "record_count": 14
+    },
+    "message": "Cached data available (first 25 records of each type)",
+    "cache_types": [
+      "agency",
+      "calendar",
+      "calendar_dates",
+      "dds_location_mapping_upload",
+      "feed_info",
+      "matching_table_platforms",
+      "realtime",
+      "routes",
+      "stop_time_overrides",
+      "stop_times",
+      "stops",
+      "transfers",
+      "translations",
+      "trips"
+    ],
+    "endpoints": {
+      "agency": "http://localhost:25580/api/cache/agency",
+      "calendar": "http://localhost:25580/api/cache/calendar",
+      "calendar_dates": "http://localhost:25580/api/cache/calendar_dates",
+      "dds_location_mapping_upload": "http://localhost:25580/api/cache/dds_location_mapping_upload",
+      "feed_info": "http://localhost:25580/api/cache/feed_info",
+      "matching_table_platforms": "http://localhost:25580/api/cache/matching_table_platforms",
+      "realtime": "http://localhost:25580/api/cache/realtime",
+      "routes": "http://localhost:25580/api/cache/routes",
+      "stop_time_overrides": "http://localhost:25580/api/cache/stop_time_overrides",
+      "stop_times": "http://localhost:25580/api/cache/stop_times",
+      "stops": "http://localhost:25580/api/cache/stops",
+      "transfers": "http://localhost:25580/api/cache/transfers",
+      "translations": "http://localhost:25580/api/cache/translations",
+      "trips": "http://localhost:25580/api/cache/trips"
+    },
+    "update_frequency": "Every 2 minutes",
+    "data": [
+      {
+        "cache_type": "agency",
+        "endpoint": "http://localhost:25580/api/cache/agency"
+      },
+      {
+        "cache_type": "calendar",
+        "endpoint": "http://localhost:25580/api/cache/calendar"
+      },
+      {
+        "cache_type": "calendar_dates",
+        "endpoint": "http://localhost:25580/api/cache/calendar_dates"
+      },
+      {
+        "cache_type": "dds_location_mapping_upload",
+        "endpoint": "http://localhost:25580/api/cache/dds_location_mapping_upload"
+      },
+      {
+        "cache_type": "feed_info",
+        "endpoint": "http://localhost:25580/api/cache/feed_info"
+      },
+      {
+        "cache_type": "matching_table_platforms",
+        "endpoint": "http://localhost:25580/api/cache/matching_table_platforms"
+      },
+      {
+        "cache_type": "realtime",
+        "endpoint": "http://localhost:25580/api/cache/realtime"
+      },
+      {
+        "cache_type": "routes",
+        "endpoint": "http://localhost:25580/api/cache/routes"
+      },
+      {
+        "cache_type": "stop_time_overrides",
+        "endpoint": "http://localhost:25580/api/cache/stop_time_overrides"
+      },
+      {
+        "cache_type": "stop_times",
+        "endpoint": "http://localhost:25580/api/cache/stop_times"
+      },
+      {
+        "cache_type": "stops",
+        "endpoint": "http://localhost:25580/api/cache/stops"
+      },
+      {
+        "cache_type": "transfers",
+        "endpoint": "http://localhost:25580/api/cache/transfers"
+      },
+      {
+        "cache_type": "translations",
+        "endpoint": "http://localhost:25580/api/cache/translations"
+      },
+      {
+        "cache_type": "trips",
+        "endpoint": "http://localhost:25580/api/cache/trips"
+      }
+    ]
+  }
+}

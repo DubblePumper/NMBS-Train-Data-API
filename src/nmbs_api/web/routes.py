@@ -6,7 +6,7 @@ import traceback
 import json
 import os
 import datetime
-from flask import Blueprint, jsonify, request, redirect, Response
+from flask import Blueprint, jsonify, request
 from .utils import extract_request_params
 from .security import limiter, run_security_audit
 from ..api import (
@@ -18,14 +18,43 @@ from ..api import (
 from .cache import CacheManager
 from ..tests.test_api import test_api
 from .trajectories_endpoint import get_trajectories
-from .config import get_pagination_settings, API_NAME, API_VERSION
+from .config import API_NAME, API_VERSION
+from .schemas import (
+    SCHEMA_SPEC_VERSION,
+    get_all_endpoint_schemas,
+    get_endpoint_schema,
+    get_schema_catalog,
+)
 
 # Configure logging
 logger = logging.getLogger(__name__)
 
-# API version and name information
-API_NAME = "NMBS Train Data API"
-API_VERSION = "1.0.0"  # You may want to extract this from a version file
+
+def _current_utc_iso() -> str:
+    """Return current UTC timestamp in ISO-8601 format."""
+    return datetime.datetime.utcnow().isoformat() + "Z"
+
+def _is_update_authorized():
+    """
+    Check whether /api/update request is authorized.
+
+    If API_UPDATE_TOKEN is not set, endpoint remains open for backward compatibility.
+    """
+    expected_token = os.getenv('API_UPDATE_TOKEN', '').strip()
+    if not expected_token:
+        return True
+
+    supplied_token = request.headers.get('X-API-Token', '').strip()
+    if supplied_token and supplied_token == expected_token:
+        return True
+
+    auth_header = request.headers.get('Authorization', '').strip()
+    if auth_header.lower().startswith('bearer '):
+        bearer_token = auth_header[7:].strip()
+        if bearer_token == expected_token:
+            return True
+
+    return False
 
 def add_metadata_to_response(data, endpoint_name=None, file_type=None):
     """
@@ -80,7 +109,7 @@ def add_metadata_to_response(data, endpoint_name=None, file_type=None):
         metadata["generated_at"] = last_update_time
     else:
         # Fallback to current time if no download timestamp is available
-        metadata["generated_at"] = datetime.datetime.utcnow().isoformat()
+        metadata["generated_at"] = _current_utc_iso()
     
     # Count records in the response
     if isinstance(data, dict) and "data" in data and isinstance(data["data"], list):
@@ -111,18 +140,76 @@ def add_metadata_to_response(data, endpoint_name=None, file_type=None):
     # If data is already a dict but doesn't have a 'data' key, add metadata without modifying structure
     if isinstance(data, dict):
         if "data" not in data:
-            # Don't modify error responses
             if "error" in data:
-                return data
+                return {"ok": False, "metadata": metadata, **data}
             else:
-                # For other responses, keep the existing structure and add metadata
-                return {"metadata": metadata, **data}
+                return {"ok": True, "metadata": metadata, **data}
         else:
-            # Already has a 'data' key, add metadata
-            return {"metadata": metadata, **data}
+            return {"ok": True, "metadata": metadata, **data}
     else:
-        # For other types, wrap in a data object
-        return {"metadata": metadata, "data": data}
+        return {"ok": True, "metadata": metadata, "data": data}
+
+
+def _load_json_file(file_path: str):
+    """Load JSON file content safely; return None when unavailable."""
+    if not os.path.exists(file_path):
+        return None
+    try:
+        with open(file_path, 'r', encoding='utf-8') as f:
+            return json.load(f)
+    except Exception as e:
+        logger.error(f"Failed loading JSON file {file_path}: {str(e)}")
+        return None
+
+
+def _resolve_cached_payload(data_type: str):
+    """Resolve cached payload from multiple compatible cache locations."""
+    candidates = [
+        os.path.join('data', 'cache', f"{data_type}_cache.json"),
+        os.path.join('data', f"{data_type}_cache.json"),
+    ]
+
+    for candidate in candidates:
+        payload = _load_json_file(candidate)
+        if payload is not None:
+            return payload
+
+    combined_cache = _load_json_file(os.path.join('data', 'short-test-data.json'))
+    if isinstance(combined_cache, dict):
+        if data_type == 'realtime' and 'realtime' in combined_cache:
+            return combined_cache.get('realtime')
+
+        planning_data = combined_cache.get('planning_data', {})
+        if isinstance(planning_data, dict) and data_type in planning_data:
+            return planning_data.get(data_type)
+
+        if data_type in combined_cache:
+            return combined_cache.get(data_type)
+
+    return None
+
+
+def _get_available_cache_types():
+    """Discover available cache types across legacy and new cache layouts."""
+    types = set()
+
+    for cache_dir in [os.path.join('data', 'cache'), 'data']:
+        if os.path.exists(cache_dir):
+            for file_name in os.listdir(cache_dir):
+                if file_name.endswith('_cache.json'):
+                    types.add(file_name.replace('_cache.json', ''))
+
+    combined_cache = _load_json_file(os.path.join('data', 'short-test-data.json'))
+    if isinstance(combined_cache, dict):
+        if combined_cache.get('realtime') is not None:
+            types.add('realtime')
+
+        planning_data = combined_cache.get('planning_data', {})
+        if isinstance(planning_data, dict):
+            for key in planning_data.keys():
+                types.add(key)
+
+    return sorted(types)
 
 # Create API blueprint
 api_bp = Blueprint('api', __name__, url_prefix='/api')
@@ -142,8 +229,86 @@ api_routes = Blueprint('api', __name__)
 
 @api_routes.route('/', methods=['GET'])
 def root():
-    """Root endpoint that redirects to the health check"""
-    return redirect('/api/health')
+    """Root endpoint with API index and quick links."""
+    host_base = request.host_url.rstrip('/')
+    payload = {
+        "message": "NMBS Train Data API",
+        "endpoints": {
+            "health": f"{host_base}/api/health",
+            "realtime": f"{host_base}/api/realtime/data",
+            "planning_files": f"{host_base}/api/planningdata/files",
+            "trajectories": f"{host_base}/api/trajectories",
+            "schema_catalog": f"{host_base}/api/schema",
+            "schema_list": f"{host_base}/api/schema/endpoints",
+            "metrics": f"{host_base}/metrics"
+        }
+    }
+    return jsonify(add_metadata_to_response(payload, endpoint_name='/api', file_type='index'))
+
+
+@api_routes.route('/schema', methods=['GET'])
+@limiter.limit("30 per minute")
+def get_schema_catalog_endpoint():
+    """Return versioned schema catalog for typed client generation."""
+    base_url = request.host_url.rstrip('/')
+    catalog = get_schema_catalog(base_url=base_url)
+    response_data = add_metadata_to_response(
+        {"data": catalog},
+        endpoint_name='/api/schema',
+        file_type='schema_catalog',
+    )
+    return jsonify(response_data)
+
+
+@api_routes.route('/schema/endpoints', methods=['GET'])
+@limiter.limit("30 per minute")
+def get_schema_endpoints_list():
+    """Return all available endpoint schema ids."""
+    base_url = request.host_url.rstrip('/')
+    schemas = get_all_endpoint_schemas()
+    payload = {
+        "schema_spec_version": SCHEMA_SPEC_VERSION,
+        "api_version": API_VERSION,
+        "data": [
+            {
+                "id": schema_id,
+                "method": schema_def.get('method'),
+                "path": schema_def.get('path'),
+                "description": schema_def.get('description'),
+                "schema_url": f"{base_url}/api/schema/{schema_id}",
+            }
+            for schema_id, schema_def in sorted(schemas.items(), key=lambda x: x[0])
+        ],
+    }
+    response_data = add_metadata_to_response(payload, endpoint_name='/api/schema/endpoints', file_type='schema_index')
+    return jsonify(response_data)
+
+
+@api_routes.route('/schema/<schema_id>', methods=['GET'])
+@limiter.limit("30 per minute")
+def get_endpoint_schema_by_id(schema_id):
+    """Return JSON schema for a specific endpoint id."""
+    schema = get_endpoint_schema(schema_id)
+    if not schema:
+        response_data = add_metadata_to_response(
+            {
+                "error": "Schema not found",
+                "message": f"No schema registered for id '{schema_id}'",
+                "available": sorted(get_all_endpoint_schemas().keys()),
+            },
+            endpoint_name=f'/api/schema/{schema_id}',
+            file_type='schema_endpoint',
+        )
+        return jsonify(response_data), 404
+
+    payload = {
+        "schema_id": schema_id,
+        "schema_spec_version": SCHEMA_SPEC_VERSION,
+        "api_version": API_VERSION,
+        "data": schema,
+    }
+    response_data = add_metadata_to_response(payload, endpoint_name=f'/api/schema/{schema_id}', file_type='schema_endpoint')
+    return jsonify(response_data)
 
 @api_routes.route('/health', methods=['GET'])
 @limiter.limit("60 per minute")
@@ -151,11 +316,12 @@ def health_check():
     """Simple health check endpoint"""
     host = request.headers.get('Host', 'unknown')
     logger.info(f"Health check received from host: {host}")
-    return jsonify({
+    payload = {
         "status": "healthy", 
         "service": "NMBS Train Data API",
         "host": host
-    })
+    }
+    return jsonify(add_metadata_to_response(payload, endpoint_name='/api/health', file_type='health'))
 
 # Realtime data endpoints
 @api_routes.route('/realtime/data', methods=['GET'])
@@ -173,10 +339,12 @@ def get_realtime_data_endpoint():
             response_data = add_metadata_to_response(data, endpoint_name='/api/realtime/data', file_type='realtime')
             return jsonify(response_data)
         else:
-            return jsonify({"error": "No realtime data available"}), 404
+            response_data = add_metadata_to_response({"error": "No realtime data available"}, endpoint_name='/api/realtime/data', file_type='realtime')
+            return jsonify(response_data), 404
     except Exception as e:
         logger.error(f"Error getting realtime data: {str(e)}")
-        return jsonify({"error": "Error processing request", "message": str(e)}), 500
+        response_data = add_metadata_to_response({"error": "Error processing request", "message": str(e)}, endpoint_name='/api/realtime/data', file_type='realtime')
+        return jsonify(response_data), 500
 
 # Planning data endpoints
 @api_routes.route('/planningdata/files', methods=['GET'])
@@ -189,12 +357,16 @@ def get_planning_files_endpoint():
         files = get_planning_files_list()
         
         if files:
-            return jsonify({"files": files})
+            payload = {"files": files, "data": files}
+            response_data = add_metadata_to_response(payload, endpoint_name='/api/planningdata/files', file_type='planning_files')
+            return jsonify(response_data)
         else:
-            return jsonify({"error": "No planning data files available"}), 404
+            response_data = add_metadata_to_response({"error": "No planning data files available"}, endpoint_name='/api/planningdata/files', file_type='planning_files')
+            return jsonify(response_data), 404
     except Exception as e:
         logger.error(f"Error getting planning files: {str(e)}")
-        return jsonify({"error": "Error processing request", "message": str(e)}), 500
+        response_data = add_metadata_to_response({"error": "Error processing request", "message": str(e)}, endpoint_name='/api/planningdata/files', file_type='planning_files')
+        return jsonify(response_data), 500
 
 @api_routes.route('/planningdata/data', methods=['GET'])
 @limiter.limit("60 per minute")
@@ -206,7 +378,8 @@ def get_all_planning_data():
         files = get_planning_files_list()
         
         if not files:
-            return jsonify({"error": "No planning data available"}), 404
+            response_data = add_metadata_to_response({"error": "No planning data available"}, endpoint_name='/api/planningdata/data', file_type='planning_index')
+            return jsonify(response_data), 404
         
         # Create a response with URLs to each file endpoint
         base_url = request.host_url.rstrip('/')
@@ -216,14 +389,18 @@ def get_all_planning_data():
             file_name = file.split('.')[0]  # Remove extension
             file_urls[file_name] = f"{base_url}/api/planningdata/{file_name}"
         
-        return jsonify({
+        payload = {
             "message": "Planning data available at the following endpoints",
             "files": files,
-            "endpoints": file_urls
-        })
+            "endpoints": file_urls,
+            "data": [{"file": f, "endpoint": file_urls.get(f.split('.')[0])} for f in files]
+        }
+        response_data = add_metadata_to_response(payload, endpoint_name='/api/planningdata/data', file_type='planning_index')
+        return jsonify(response_data)
     except Exception as e:
         logger.error(f"Error getting all planning data: {str(e)}")
-        return jsonify({"error": "Error processing request", "message": str(e)}), 500
+        response_data = add_metadata_to_response({"error": "Error processing request", "message": str(e)}, endpoint_name='/api/planningdata/data', file_type='planning_index')
+        return jsonify(response_data), 500
 
 @api_routes.route('/planningdata/<filename>', methods=['GET'])
 @limiter.limit("45 per minute")
@@ -268,7 +445,8 @@ def get_specific_planning_file(filename):
                         break
             
             if not found_file:
-                return jsonify({"error": f"Planning file '{filename}' not found"}), 404
+                response_data = add_metadata_to_response({"error": f"Planning file '{filename}' not found"}, endpoint_name=f'/api/planningdata/{filename}', file_type='planning_file')
+                return jsonify(response_data), 404
             
             filename = found_file
         
@@ -299,14 +477,16 @@ def get_specific_planning_file(filename):
             )
             return jsonify(response_data)
         else:
-            return jsonify({"error": f"Could not parse planning file '{filename}'"}), 404
+            response_data = add_metadata_to_response({"error": f"Could not parse planning file '{filename}'"}, endpoint_name=f'/api/planningdata/{filename}', file_type='planning_file')
+            return jsonify(response_data), 404
     except Exception as e:
         logger.error(f"Error processing request for file {filename}: {str(e)}")
         logger.error(traceback.format_exc())
-        return jsonify({
+        response_data = add_metadata_to_response({
             "error": f"Error processing request", 
             "message": str(e)
-        }), 500
+        }, endpoint_name=f'/api/planningdata/{filename}', file_type='planning_file')
+        return jsonify(response_data), 500
 
 # Direct endpoints for common GTFS files with auto-filling filename extensions
 
@@ -341,14 +521,16 @@ def get_stops_data():
             response_data = add_metadata_to_response(data, endpoint_name='/api/planningdata/stops', file_type='stops')
             return jsonify(response_data)
         else:
-            return jsonify({"error": "No stops data available"}), 404
+            response_data = add_metadata_to_response({"error": "No stops data available"}, endpoint_name='/api/planningdata/stops', file_type='stops')
+            return jsonify(response_data), 404
     except Exception as e:
         logger.error(f"Error fetching stops data: {str(e)}")
         logger.error(traceback.format_exc())
-        return jsonify({
+        response_data = add_metadata_to_response({
             "error": "Error processing request", 
             "message": str(e)
-        }), 500
+        }, endpoint_name='/api/planningdata/stops', file_type='stops')
+        return jsonify(response_data), 500
 
 @api_routes.route('/planningdata/routes', methods=['GET'])
 @limiter.limit("45 per minute")
@@ -381,13 +563,15 @@ def get_routes_data():
             response_data = add_metadata_to_response(data, endpoint_name='/api/planningdata/routes', file_type='routes')
             return jsonify(response_data)
         else:
-            return jsonify({"error": "No routes data available"}), 404
+            response_data = add_metadata_to_response({"error": "No routes data available"}, endpoint_name='/api/planningdata/routes', file_type='routes')
+            return jsonify(response_data), 404
     except Exception as e:
         logger.error(f"Error fetching routes data: {str(e)}")
-        return jsonify({
+        response_data = add_metadata_to_response({
             "error": "Error processing request", 
             "message": str(e)
-        }), 500
+        }, endpoint_name='/api/planningdata/routes', file_type='routes')
+        return jsonify(response_data), 500
 
 @api_routes.route('/planningdata/calendar', methods=['GET'])
 @limiter.limit("45 per minute")
@@ -420,13 +604,15 @@ def get_calendar_data():
             response_data = add_metadata_to_response(data, endpoint_name='/api/planningdata/calendar', file_type='calendar')
             return jsonify(response_data)
         else:
-            return jsonify({"error": "No calendar data available"}), 404
+            response_data = add_metadata_to_response({"error": "No calendar data available"}, endpoint_name='/api/planningdata/calendar', file_type='calendar')
+            return jsonify(response_data), 404
     except Exception as e:
         logger.error(f"Error fetching calendar data: {str(e)}")
-        return jsonify({
+        response_data = add_metadata_to_response({
             "error": "Error processing request", 
             "message": str(e)
-        }), 500
+        }, endpoint_name='/api/planningdata/calendar', file_type='calendar')
+        return jsonify(response_data), 500
 
 @api_routes.route('/planningdata/trips', methods=['GET'])
 @limiter.limit("45 per minute")
@@ -459,13 +645,15 @@ def get_trips_data():
             response_data = add_metadata_to_response(data, endpoint_name='/api/planningdata/trips', file_type='trips')
             return jsonify(response_data)
         else:
-            return jsonify({"error": "No trips data available"}), 404
+            response_data = add_metadata_to_response({"error": "No trips data available"}, endpoint_name='/api/planningdata/trips', file_type='trips')
+            return jsonify(response_data), 404
     except Exception as e:
         logger.error(f"Error fetching trips data: {str(e)}")
-        return jsonify({
+        response_data = add_metadata_to_response({
             "error": "Error processing request", 
             "message": str(e)
-        }), 500
+        }, endpoint_name='/api/planningdata/trips', file_type='trips')
+        return jsonify(response_data), 500
 
 @api_routes.route('/planningdata/stop_times', methods=['GET'])
 @limiter.limit("30 per minute")
@@ -503,14 +691,16 @@ def get_stop_times_data():
             response_data = add_metadata_to_response(data, endpoint_name='/api/planningdata/stop_times', file_type='stop_times')
             return jsonify(response_data)
         else:
-            return jsonify({"error": "No stop times data available"}), 404
+            response_data = add_metadata_to_response({"error": "No stop times data available"}, endpoint_name='/api/planningdata/stop_times', file_type='stop_times')
+            return jsonify(response_data), 404
     except Exception as e:
         logger.error(f"Error fetching stop_times data: {str(e)}")
         logger.error(traceback.format_exc())
-        return jsonify({
+        response_data = add_metadata_to_response({
             "error": "Error processing request", 
             "message": str(e)
-        }), 500
+        }, endpoint_name='/api/planningdata/stop_times', file_type='stop_times')
+        return jsonify(response_data), 500
 
 # Add more standard GTFS file endpoints
 @api_routes.route('/planningdata/calendar_dates', methods=['GET'])
@@ -542,27 +732,24 @@ def get_cached_data(data_type):
         data_type: The type of data to retrieve (e.g., 'stops', 'routes', 'realtime')
     """
     try:
-        # Check if the cache file exists
-        cache_file = os.path.join('data', f"{data_type}_cache.json")
-        
-        if os.path.exists(cache_file):
-            with open(cache_file, 'r') as f:
-                cached_data = json.load(f)
-            
+        cached_data = _resolve_cached_payload(data_type)
+        if cached_data is not None:
             logger.info(f"Returned cached data for {data_type}")
-            return jsonify(cached_data)
+            response_data = add_metadata_to_response({"data": cached_data}, endpoint_name=f'/api/cache/{data_type}', file_type=f'cache_{data_type}')
+            return jsonify(response_data)
         else:
-            # If not in cache, return a message
-            return jsonify({
+            response_data = add_metadata_to_response({
                 "error": f"No cached data available for {data_type}",
                 "message": "The cache is updated every 2 minutes. Try again later or use the full data endpoint."
-            }), 404
+            }, endpoint_name=f'/api/cache/{data_type}', file_type=f'cache_{data_type}')
+            return jsonify(response_data), 404
     except Exception as e:
         logger.error(f"Error retrieving cached data for {data_type}: {str(e)}")
-        return jsonify({
+        response_data = add_metadata_to_response({
             "error": "Error retrieving cached data",
             "message": str(e)
-        }), 500
+        }, endpoint_name=f'/api/cache/{data_type}', file_type=f'cache_{data_type}')
+        return jsonify(response_data), 500
 
 @api_routes.route('/cache', methods=['GET'])
 @limiter.limit("90 per minute")
@@ -571,7 +758,7 @@ def get_available_cache():
     Get a list of available cached data types
     """
     try:
-        cache_files = [f.replace('_cache.json', '') for f in os.listdir('data') if f.endswith('_cache.json')]
+        cache_files = _get_available_cache_types()
         
         # Create a response with URLs to each cache endpoint
         base_url = request.host_url.rstrip('/')
@@ -580,18 +767,22 @@ def get_available_cache():
         for cache_type in cache_files:
             cache_urls[cache_type] = f"{base_url}/api/cache/{cache_type}"
         
-        return jsonify({
+        payload = {
             "message": "Cached data available (first 25 records of each type)",
             "cache_types": cache_files,
             "endpoints": cache_urls,
-            "update_frequency": "Every 2 minutes"
-        })
+            "update_frequency": "Every 2 minutes",
+            "data": [{"cache_type": c, "endpoint": cache_urls.get(c)} for c in cache_files]
+        }
+        response_data = add_metadata_to_response(payload, endpoint_name='/api/cache', file_type='cache_index')
+        return jsonify(response_data)
     except Exception as e:
         logger.error(f"Error retrieving available cache: {str(e)}")
-        return jsonify({
+        response_data = add_metadata_to_response({
             "error": "Error retrieving available cache",
             "message": str(e)
-        }), 500
+        }, endpoint_name='/api/cache', file_type='cache_index')
+        return jsonify(response_data), 500
 
 # Compatibility with old endpoint - now redirects to new endpoint with deprecation message
 @api_routes.route('/data', methods=['GET'])
@@ -603,14 +794,15 @@ def get_data():
     logger.warning("Deprecated endpoint '/api/data' used. This endpoint is no longer supported.")
     
     # Return a clear error message with redirection information
-    return jsonify({
+    response_data = add_metadata_to_response({
         "error": "Endpoint deprecated",
         "message": "The /api/data endpoint is no longer available. Please use the new endpoints:",
         "new_endpoints": {
             "realtime_data": request.host_url.rstrip('/') + "/api/realtime/data",
             "planning_data": request.host_url.rstrip('/') + "/api/planningdata/data"
         }
-    }), 410  # 410 Gone status code
+    }, endpoint_name='/api/data', file_type='deprecated')
+    return jsonify(response_data), 410
 
 @api_routes.route('/update', methods=['POST'])
 @limiter.limit("5 per minute")
@@ -618,6 +810,13 @@ def update_data_endpoint():
     """Force an immediate update of the data"""
     from .validation import validate_json
     from .monitoring import record_data_update, record_error
+
+    if not _is_update_authorized():
+        response_data = add_metadata_to_response({
+            "error": "Unauthorized",
+            "message": "Missing or invalid API token for update endpoint"
+        }, endpoint_name='/api/update', file_type='update')
+        return jsonify(response_data), 401
     
     try:
         # Valideer de JSON input als die aanwezig is
@@ -644,11 +843,12 @@ def update_data_endpoint():
                 logger.info(f"Uitvoeren update met parameters: force={force}, type={update_type}")
             except ValidationError as e:
                 logger.warning(f"Ongeldige JSON voor update: {e}")
-                return jsonify({
+                response_data = add_metadata_to_response({
                     "error": "Ongeldige JSON data", 
                     "details": str(e),
                     "schema": UPDATE_SCHEMA
-                }), 400
+                }, endpoint_name='/api/update', file_type='update')
+                return jsonify(response_data), 400
         else:
             # Default parameters als er geen JSON is
             force = True
@@ -686,26 +886,29 @@ def update_data_endpoint():
             except Exception as e:
                 logger.error(f"Fout bij het bijwerken van metrics: {e}")
             
-            return jsonify({
+            response_data = add_metadata_to_response({
                 "status": "success", 
                 "message": "Data updated successfully",
                 "elapsed_time": elapsed_time,
                 "timestamp": datetime.datetime.utcnow().isoformat()
-            })
+            }, endpoint_name='/api/update', file_type='update')
+            return jsonify(response_data)
         else:
             # Registreer een fout
             record_error("update", "UpdateFailed", "Data update failed")
-            return jsonify({
+            response_data = add_metadata_to_response({
                 "status": "error", 
                 "message": "Failed to update data",
                 "elapsed_time": elapsed_time
-            }), 500
+            }, endpoint_name='/api/update', file_type='update')
+            return jsonify(response_data), 500
             
     except Exception as e:
         logger.error(f"Error updating data: {str(e)}")
         # Registreer een fout
         record_error("update", "Exception", str(e))
-        return jsonify({"error": "Error updating data", "message": str(e)}), 500
+        response_data = add_metadata_to_response({"error": "Error updating data", "message": str(e)}, endpoint_name='/api/update', file_type='update')
+        return jsonify(response_data), 500
 
 @api_routes.route('/security/audit', methods=['GET'])
 @limiter.limit("10 per minute")
@@ -720,16 +923,17 @@ def security_audit_endpoint():
         # Run the security audit
         audit_results = run_security_audit()
         
-        # Return the results as JSON
-        return jsonify(audit_results)
+        response_data = add_metadata_to_response(audit_results, endpoint_name='/api/security/audit', file_type='security_audit')
+        return jsonify(response_data)
     except Exception as e:
         logger.error(f"Error running security audit: {str(e)}")
         logger.error(traceback.format_exc())
-        return jsonify({
+        response_data = add_metadata_to_response({
             "error": "Error running security audit",
             "message": str(e),
             "timestamp": datetime.datetime.utcnow().isoformat()
-        }), 500
+        }, endpoint_name='/api/security/audit', file_type='security_audit')
+        return jsonify(response_data), 500
 
 # Add the trajectories endpoint
 @api_routes.route('/trajectories', methods=['GET'])
@@ -759,13 +963,16 @@ def get_trajectories_data():
         # If response is a tuple, it contains an error
         if isinstance(response, tuple):
             logger.error(f"Error generating trajectories: {response[0]}")
-            return jsonify(response[0]), response[1]
+            response_data = add_metadata_to_response(response[0], endpoint_name='/api/trajectories', file_type='trajectories')
+            return jsonify(response_data), response[1]
             
-        return jsonify(response)
+        response_data = add_metadata_to_response(response, endpoint_name='/api/trajectories', file_type='trajectories')
+        return jsonify(response_data)
     except Exception as e:
         logger.error(f"Error in trajectories endpoint: {str(e)}")
         logger.error(traceback.format_exc())
-        return jsonify({
+        response_data = add_metadata_to_response({
             "error": "Error generating trajectories data", 
             "message": str(e)
-        }), 500
+        }, endpoint_name='/api/trajectories', file_type='trajectories')
+        return jsonify(response_data), 500

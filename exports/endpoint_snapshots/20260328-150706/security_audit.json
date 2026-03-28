@@ -1,0 +1,95 @@
+{
+  "name": "security_audit",
+  "method": "GET",
+  "url": "http://localhost:25580/api/security/audit",
+  "ok": true,
+  "status": 200,
+  "fetched_at": "2026-03-28T14:07:12Z",
+  "request_body": null,
+  "response_headers": {
+    "Server": "Werkzeug/3.1.7 Python/3.14.3",
+    "Date": "Sat, 28 Mar 2026 14:07:12 GMT",
+    "Content-Type": "application/json",
+    "Content-Length": "1534",
+    "Content-Security-Policy": "default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline';",
+    "X-Content-Type-Options": "nosniff",
+    "X-Frame-Options": "DENY",
+    "X-XSS-Protection": "1; mode=block",
+    "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+    "Cache-Control": "no-store, no-cache, must-revalidate, max-age=0",
+    "Pragma": "no-cache",
+    "Referrer-Policy": "strict-origin-when-cross-origin",
+    "Access-Control-Allow-Origin": "*",
+    "Connection": "close"
+  },
+  "is_json": true,
+  "body": {
+    "ok": true,
+    "metadata": {
+      "api_name": "NMBS Train Data API",
+      "version": "1.0.0",
+      "endpoint": "/api/security/audit",
+      "data_type": "security_audit",
+      "generated_at": "2026-03-28T14:06:15.294794"
+    },
+    "timestamp": "2026-03-28T14:07:12.875131",
+    "checks": [
+      {
+        "name": "rate_limiting",
+        "status": "enabled",
+        "details": {
+          "default": [
+            "200 per day",
+            "50 per hour"
+          ],
+          "health_check": "60 per minute",
+          "trip_search": "30 per minute",
+          "station_info": "60 per minute"
+        }
+      },
+      {
+        "name": "https_enforcement",
+        "status": "disabled",
+        "details": "HTTPS redirect middleware is currently disabled in _register_security_middleware",
+        "except": [
+          "localhost",
+          "127.0.0.1"
+        ]
+      },
+      {
+        "name": "security_headers",
+        "status": "enabled",
+        "headers": [
+          "Content-Security-Policy",
+          "X-Content-Type-Options",
+          "X-Frame-Options",
+          "X-XSS-Protection",
+          "Strict-Transport-Security",
+          "Cache-Control",
+          "Pragma",
+          "Referrer-Policy"
+        ]
+      },
+      {
+        "name": "input_validation",
+        "status": "enabled",
+        "patterns": [
+          "station_id",
+          "train_id",
+          "page",
+          "page_size",
+          "date",
+          "time"
+        ]
+      },
+      {
+        "name": "security_logging",
+        "status": "enabled",
+        "details": {
+          "log_dir": "logs/security",
+          "log_files": 1
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,358 @@
+{
+  "name": "trajectories",
+  "method": "GET",
+  "url": "http://localhost:25580/api/trajectories?limit=5",
+  "ok": true,
+  "status": 200,
+  "fetched_at": "2026-03-28T14:07:13Z",
+  "request_body": null,
+  "response_headers": {
+    "Server": "Werkzeug/3.1.7 Python/3.14.3",
+    "Date": "Sat, 28 Mar 2026 14:07:13 GMT",
+    "Content-Type": "application/json",
+    "Content-Length": "9170",
+    "Content-Security-Policy": "default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline';",
+    "X-Content-Type-Options": "nosniff",
+    "X-Frame-Options": "DENY",
+    "X-XSS-Protection": "1; mode=block",
+    "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+    "Cache-Control": "no-store, no-cache, must-revalidate, max-age=0",
+    "Pragma": "no-cache",
+    "Referrer-Policy": "strict-origin-when-cross-origin",
+    "Access-Control-Allow-Origin": "*",
+    "Connection": "close"
+  },
+  "is_json": true,
+  "body": {
+    "ok": true,
+    "metadata": {
+      "api_name": "NMBS Train Data API",
+      "version": "1.0.0",
+      "endpoint": "/api/trajectories",
+      "data_type": "trajectories",
+      "generated_at": "2026-03-28T14:07:13.315953",
+      "record_count": 5,
+      "total_records": 374,
+      "page": 0,
+      "page_size": 5,
+      "total_pages": 75
+    },
+    "data": [
+      {
+        "entity_id": "88____:102::8727100:8814001:19:1521:20260329",
+        "trip_id": "88____:102::8727100:8814001:19:1521:20260329",
+        "route": {
+          "route_id": "861",
+          "route_type": "OTC",
+          "route_name": "Paris Nord (FR) -- Bruxelles-Midi",
+          "agency_id": "NMBS/SNCB"
+        },
+        "trip": {
+          "trip_number": "65",
+          "trip_headsign": "Bruxelles-Midi",
+          "service_id": "000102"
+        },
+        "stops": [
+          {
+            "stop_id": "8727100",
+            "station": {
+              "name": "Paris Nord (FR)",
+              "location": {
+                "latitude": "48.8801080",
+                "longitude": "2.35457700"
+              },
+              "translations": {
+                "nl": "Paris Nord (FR)",
+                "de": "Paris Nord (FR)",
+                "en": "Paris Nord (FR)"
+              }
+            },
+            "arrival": null,
+            "departure": {
+              "timestamp": "1774695420",
+              "datetime": "2026-03-28 10:57:00 (Saturday)",
+              "delay_seconds": 0,
+              "delay_minutes": 0,
+              "status": "on time"
+            }
+          },
+          {
+            "stop_id": "8814001_7",
+            "station": {
+              "name": "Bruxelles-Midi",
+              "location": {
+                "latitude": "50.8357100",
+                "longitude": "4.33653000"
+              },
+              "translations": {
+                "nl": "Brussel-Zuid",
+                "de": "Brus.-Zuid / Brux.-Midi",
+                "en": "Brux.-Midi/Brus.-Zuid"
+              }
+            },
+            "arrival": {
+              "timestamp": "1774707660",
+              "datetime": "2026-03-28 14:21:00 (Saturday)",
+              "delay_seconds": 0,
+              "delay_minutes": 0,
+              "status": "on time"
+            },
+            "departure": null
+          }
+        ]
+      },
+      {
+        "entity_id": "88____:007::8814001:8866001:62:1522:20260328",
+        "trip_id": "88____:007::8814001:8866001:62:1522:20260328",
+        "route": {
+          "route_id": "121",
+          "route_type": "IC",
+          "route_name": "Bruxelles-Midi -- Arlon",
+          "agency_id": "NMBS/SNCB"
+        },
+        "trip": {
+          "trip_number": "2112",
+          "trip_headsign": "Arlon",
+          "service_id": "000187"
+        },
+        "stops": [
+          {
+            "stop_id": "8814001_14",
+            "station": {
+              "name": "Bruxelles-Midi",
+              "location": {
+                "latitude": "50.8357100",
+                "longitude": "4.33653000"
+              },
+              "translations": {
+                "nl": "Brussel-Zuid",
+                "de": "Brus.-Zuid / Brux.-Midi",
+                "en": "Brux.-Midi/Brus.-Zuid"
+              }
+            },
+            "arrival": null,
+            "departure": {
+              "timestamp": "1774696500",
+              "datetime": "2026-03-28 11:15:00 (Saturday)",
+              "delay_seconds": 0,
+              "delay_minutes": 0,
+              "status": "on time"
+            }
+          },
+          {
+            "stop_id": "8866001_3",
+            "station": {
+              "name": "Arlon",
+              "location": {
+                "latitude": "49.6805320",
+                "longitude": "5.80997200"
+              },
+              "translations": {
+                "nl": "Aarlen",
+                "de": "Aarlen / Arlon",
+                "en": "Arlon / Aarlen"
+              }
+            },
+            "arrival": {
+              "timestamp": "1774707720",
+              "datetime": "2026-03-28 14:22:00 (Saturday)",
+              "delay_seconds": 0,
+              "delay_minutes": 0,
+              "status": "on time"
+            },
+            "departure": null
+          }
+        ]
+      },
+      {
+        "entity_id": "88____:007::8844628:8891702:39:1528:20260329",
+        "trip_id": "88____:007::8844628:8891702:39:1528:20260329",
+        "route": {
+          "route_id": "869",
+          "route_type": "IC",
+          "route_name": "Eupen -- Ostende",
+          "agency_id": "NMBS/SNCB"
+        },
+        "trip": {
+          "trip_number": "535",
+          "trip_headsign": "Ostende",
+          "service_id": "003039"
+        },
+        "stops": [
+          {
+            "stop_id": "8844628_1",
+            "station": {
+              "name": "Eupen",
+              "location": {
+                "latitude": "50.6351600",
+                "longitude": "6.03711000"
+              },
+              "translations": {
+                "nl": "Eupen",
+                "de": "Eupen",
+                "en": "Eupen"
+              }
+            },
+            "arrival": null,
+            "departure": {
+              "timestamp": "1774696620",
+              "datetime": "2026-03-28 11:17:00 (Saturday)",
+              "delay_seconds": 0,
+              "delay_minutes": 0,
+              "status": "on time"
+            }
+          },
+          {
+            "stop_id": "8891702_3",
+            "station": {
+              "name": "Ostende",
+              "location": {
+                "latitude": "51.2282100",
+                "longitude": "2.92581000"
+              },
+              "translations": {
+                "nl": "Oostende",
+                "de": "Oostende / Ostende",
+                "en": "Ostende / Oostende"
+              }
+            },
+            "arrival": {
+              "timestamp": "1774708080",
+              "datetime": "2026-03-28 14:28:00 (Saturday)",
+              "delay_seconds": 0,
+              "delay_minutes": 0,
+              "status": "on time"
+            },
+            "departure": null
+          }
+        ]
+      },
+      {
+        "entity_id": "88____:007::8833001:8892338:38:1508:20260329",
+        "trip_id": "88____:007::8833001:8892338:38:1508:20260329",
+        "route": {
+          "route_id": "709",
+          "route_type": "IC",
+          "route_name": "Louvain -- La Panne",
+          "agency_id": "NMBS/SNCB"
+        },
+        "trip": {
+          "trip_number": "3635",
+          "trip_headsign": "La Panne",
+          "service_id": "000102"
+        },
+        "stops": [
+          {
+            "stop_id": "8833001_C",
+            "station": {
+              "name": "Louvain",
+              "location": {
+                "latitude": "50.8822820",
+                "longitude": "4.71586800"
+              },
+              "translations": {
+                "nl": "Leuven",
+                "de": "Leuven / Louvain",
+                "en": "Louvain / Leuven"
+              }
+            },
+            "arrival": null,
+            "departure": {
+              "timestamp": "1774696740",
+              "datetime": "2026-03-28 11:19:00 (Saturday)",
+              "delay_seconds": 0,
+              "delay_minutes": 0,
+              "status": "on time"
+            }
+          },
+          {
+            "stop_id": "8892338_1",
+            "station": {
+              "name": "La Panne",
+              "location": {
+                "latitude": "51.0773980",
+                "longitude": "2.60196600"
+              },
+              "translations": {
+                "nl": "De Panne",
+                "de": "De Panne / La Panne",
+                "en": "La Panne / De Panne"
+              }
+            },
+            "arrival": {
+              "timestamp": "1774706880",
+              "datetime": "2026-03-28 14:08:00 (Saturday)",
+              "delay_seconds": 0,
+              "delay_minutes": 0,
+              "status": "on time"
+            },
+            "departure": null
+          }
+        ]
+      },
+      {
+        "entity_id": "88____:007::8891702:8844628:40:1544:20260329",
+        "trip_id": "88____:007::8891702:8844628:40:1544:20260329",
+        "route": {
+          "route_id": "869",
+          "route_type": "IC",
+          "route_name": "Eupen -- Ostende",
+          "agency_id": "NMBS/SNCB"
+        },
+        "trip": {
+          "trip_number": "512",
+          "trip_headsign": "Eupen",
+          "service_id": "003039"
+        },
+        "stops": [
+          {
+            "stop_id": "8891702_3",
+            "station": {
+              "name": "Ostende",
+              "location": {
+                "latitude": "51.2282100",
+                "longitude": "2.92581000"
+              },
+              "translations": {
+                "nl": "Oostende",
+                "de": "Oostende / Ostende",
+                "en": "Ostende / Oostende"
+              }
+            },
+            "arrival": null,
+            "departure": {
+              "timestamp": "1774696980",
+              "datetime": "2026-03-28 11:23:00 (Saturday)",
+              "delay_seconds": 0,
+              "delay_minutes": 0,
+              "status": "on time"
+            }
+          },
+          {
+            "stop_id": "8844628_1",
+            "station": {
+              "name": "Eupen",
+              "location": {
+                "latitude": "50.6351600",
+                "longitude": "6.03711000"
+              },
+              "translations": {
+                "nl": "Eupen",
+                "de": "Eupen",
+                "en": "Eupen"
+              }
+            },
+            "arrival": {
+              "timestamp": "1774709040",
+              "datetime": "2026-03-28 14:44:00 (Saturday)",
+              "delay_seconds": 0,
+              "delay_minutes": 0,
+              "status": "on time"
+            },
+            "departure": null
+          }
+        ]
+      }
+    ]
+  }
+}
