@@ -63,30 +63,33 @@ class ParserService(BaseService):
             with open(self.last_updated_file, 'r') as f:
                 update_info = json.load(f)
             
-            # Find the first available data
             if update_info:
-                # Skip any special keys like _last_updated that might be timestamps (floats)
                 valid_keys = [key for key in update_info.keys() if not key.startswith('_')]
                 
                 if not valid_keys:
                     logger.warning("Geen geldige realtime data keys gevonden")
                     return None
-                    
-                target_key = valid_keys[0]
-                
-                # Check if the target_key value is a dictionary before trying to access it
-                if isinstance(update_info[target_key], dict) and 'json_file' in update_info[target_key]:
-                    # Load the JSON file
+
+                feeds = {}
+                for target_key in valid_keys:
+                    if not isinstance(update_info[target_key], dict) or 'json_file' not in update_info[target_key]:
+                        logger.warning(f"Ongeldige realtime data structuur voor sleutel '{target_key}'")
+                        continue
+
                     json_file = update_info[target_key]['json_file']
                     if os.path.exists(json_file):
                         with open(json_file, 'r') as f:
-                            return json.load(f)
+                            feeds[target_key] = json.load(f)
                     else:
                         logger.warning(f"Realtime JSON bestand niet gevonden: {json_file}")
-                        return None
-                else:
-                    logger.warning(f"Ongeldige realtime data structuur voor sleutel '{target_key}'")
+
+                if not feeds:
                     return None
+
+                if len(feeds) == 1:
+                    return next(iter(feeds.values()))
+
+                return {"feeds": feeds}
             else:
                 logger.warning("Geen realtime data info gevonden")
                 return None

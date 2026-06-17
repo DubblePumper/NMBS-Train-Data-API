@@ -6,7 +6,7 @@ for better maintainability and separation of concerns.
 
 The original monolithic service has been split into specialized services:
 - BaseService: Common functionality for all services
-- ScraperService: Web scraping to extract data URLs
+- ScraperService: Official Belgian Mobility feed URL resolution
 - DownloaderService: Downloading data files
 - ParserService: Parsing and filtering data files
 - DataService: Main service integrating the others

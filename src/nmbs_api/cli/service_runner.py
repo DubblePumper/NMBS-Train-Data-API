@@ -21,7 +21,7 @@ def build_parser() -> argparse.ArgumentParser:
         '--scrape-interval',
         type=int,
         default=86400,
-        help='Interval in seconds between website scraping (default: 86400 - once per day)',
+        help='Interval in seconds between feed URL refreshes (default: 86400 - once per day)',
     )
     parser.add_argument(
         '--log-file',
@@ -48,7 +48,7 @@ def main() -> None:
 
     logger.info(f"Starting NMBS Data Collection Service - {datetime.now().isoformat()}")
     logger.info(f"Data download interval: {args.interval} seconds")
-    logger.info(f"Website scraping interval: {args.scrape_interval} seconds")
+    logger.info(f"Feed URL refresh interval: {args.scrape_interval} seconds")
     logger.info(f"Data directory: {args.data_dir}")
 
     service = NMBSDataService(cache_dir=args.data_dir)
@@ -56,7 +56,7 @@ def main() -> None:
 
     try:
         with logger.group("Initial Data Collection"):
-            logger.info("Performing initial website scrape...")
+            logger.info("Configuring initial feed URLs...")
             service.scrape_website()
             last_scrape_time = time.time()
 
@@ -67,8 +67,8 @@ def main() -> None:
         while True:
             current_time = time.time()
             if current_time - last_scrape_time >= args.scrape_interval:
-                with logger.group("Scheduled Website Scrape"):
-                    logger.info("Scraping website for updates...")
+                with logger.group("Scheduled Feed URL Refresh"):
+                    logger.info("Refreshing feed URL configuration...")
                     service.scrape_website()
                     last_scrape_time = current_time
 

@@ -19,7 +19,7 @@ def start_data_service():
     Start the NMBS data service in the background
     
     This will:
-    1. Do an initial scrape of the website if needed (once only)
+    1. Configure official Belgian Mobility feed URLs
     2. Download the latest data files
     3. Keep running in the background to update the data regularly
     
@@ -71,7 +71,7 @@ def get_planning_file(filename, page=0, page_size=1000, search_params=None):
     # Call the enhanced get_planning_data_file method with all parameters
     return service.get_planning_data_file(filename, page, page_size, search_params)
 
-def force_update():
+def force_update(force=True, update_type="all"):
     """
     Force an immediate update of the data
     
@@ -79,7 +79,7 @@ def force_update():
         bool: True if successful
     """
     service = get_data_service()
-    return service.download_data()
+    return service.download_data(force=force, update_type=update_type)
 
 # Backwards compatibility for old API
 def get_latest_data(include_track_changes=True):

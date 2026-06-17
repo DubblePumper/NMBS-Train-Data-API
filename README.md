@@ -35,9 +35,10 @@ Een zelfstandige API voor het verkrijgen van real-time en planningsgegevens van 
 
 - Haalt efficiënt real-time NMBS treingegevens op
 - Downloadt en verwerkt GTFS planningsgegevens met perroninformatie
-- Verwerkt Cloudflare-beveiliging bij het scrapen van de officiële website
+- Gebruikt de officiële Belgian Mobility GTFS Schedule en GTFS-Realtime feeds
+- Ondersteunt een optionele NeTEx EPIP-download
 - Slaat gegevens lokaal op voor snelle toegang
-- Minimaliseert webscraping-operaties door gegevensverzameling te scheiden van toegang
+- Beperkt grote static downloads tot het ingestelde interval en haalt realtime data frequent op
 - Biedt een eenvoudige API voor je toepassingen
 - Kan draaien als een zelfstandige service of in je applicatie worden geïntegreerd
 - Inclusief een web API voor het benaderen van gegevens via HTTP-verzoeken, perfect voor Pelican panel integratie
@@ -101,18 +102,22 @@ Maak een `.env` bestand aan in de hoofdmap met de volgende inhoud:
 
 ```ini
 # NMBS API Configuration
-NMBS_DATA_URL=URL_GEGEVEN_DOOR_GEBRUIKER
+NMBS_DATA_URL=https://api-management-discovery-production.azure-api.net/api/gtfs/feed/nmbssncb/static
+NMBS_REALTIME_TRIP_UPDATES_URL=https://api-management-discovery-production.azure-api.net/api/gtfs/feed/nmbssncb/rt/trip-update
+NMBS_REALTIME_SERVICE_ALERTS_URL=https://api-management-discovery-production.azure-api.net/api/gtfs/feed/nmbssncb/rt/alert
+NMBS_NETEX_ENABLED=false
+NMBS_NETEX_URL=https://belgianmobility.blob.core.windows.net/epip-production/epip-nmbssncb-bmc-latest.xml
 
-# Cloudflare Bypass Settings
-USER_AGENT=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36 OPR/117.0.0.0
-COOKIES_FILE=data/cookies.json
+# Belgian Mobility developer portal subscription key for frequent requests
+BM_API_KEY=
+BM_API_KEY_HEADER=Ocp-Apim-Subscription-Key
 
 # Web API Settings
 API_PORT=25580
 API_HOST=0.0.0.0
 ```
 
-Je kunt de `API_PORT` waarde eenvoudig aanpassen om te wijzigen op welke poort de web API draait.
+Je kunt de `API_PORT` waarde eenvoudig aanpassen om te wijzigen op welke poort de web API draait. Voor frequente realtime-aanvragen vul je `BM_API_KEY` in met je sleutel uit het Belgian Mobility developer portal.
 
 ## 🧩 Gestandaardiseerd JSON-formaat
 
@@ -233,7 +238,7 @@ Vervang `<server-ip>` door het IP-adres van de computer waarop de API draait en 
 | `--web-only` | Start alleen de web API zonder dataservice | uit |
 | `--interval` | Alias voor `--data-interval` | 60 |
 | `--data-interval` | Tijd in seconden tussen gegevensdownloads | 60 |
-| `--scrape-interval` | Tijd in seconden tussen webscraping-operaties | 86400 (eenmaal per dag) |
+| `--scrape-interval` | Tijd in seconden tussen feed-URL-refreshes | 86400 (eenmaal per dag) |
 | `--data-dir` | Directory om gegevensbestanden op te slaan | data |
 
 ## 📚 API Referentie
@@ -241,7 +246,7 @@ Vervang `<server-ip>` door het IP-adres van de computer waarop de API draait en 
 ### `start_data_service()`
 
 Start de NMBS dataservice in de achtergrond. Dit zal:
-1. Een initiële scrape van de website doen indien nodig
+1. De officiële Belgian Mobility feed-URL's configureren
 2. De nieuwste gegevensbestanden downloaden
 3. In de achtergrond blijven draaien om de gegevens regelmatig bij te werken
 
@@ -560,9 +565,10 @@ A standalone API for retrieving real-time and scheduling data from the Belgian r
 
 - Efficiently retrieves real-time NMBS train data
 - Downloads and processes GTFS scheduling data with platform information
-- Handles Cloudflare security when scraping the official website
+- Uses the official Belgian Mobility GTFS Schedule and GTFS-Realtime feeds
+- Supports an optional NeTEx EPIP download
 - Stores data locally for fast access
-- Minimizes web scraping operations by separating data collection from access
+- Limits large static downloads to the configured interval while refreshing realtime data frequently
 - Provides a simple API for your applications
 - Can run as a standalone service or be integrated into your application
 - Includes a web API for accessing data via HTTP requests, perfect for Pelican panel integration
@@ -625,18 +631,22 @@ Create a `.env` file in the root directory with the following content:
 
 ```ini
 # NMBS API Configuration
-NMBS_DATA_URL=URL_PROVIDED_BY_USER
+NMBS_DATA_URL=https://api-management-discovery-production.azure-api.net/api/gtfs/feed/nmbssncb/static
+NMBS_REALTIME_TRIP_UPDATES_URL=https://api-management-discovery-production.azure-api.net/api/gtfs/feed/nmbssncb/rt/trip-update
+NMBS_REALTIME_SERVICE_ALERTS_URL=https://api-management-discovery-production.azure-api.net/api/gtfs/feed/nmbssncb/rt/alert
+NMBS_NETEX_ENABLED=false
+NMBS_NETEX_URL=https://belgianmobility.blob.core.windows.net/epip-production/epip-nmbssncb-bmc-latest.xml
 
-# Cloudflare Bypass Settings
-USER_AGENT=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36 OPR/117.0.0.0
-COOKIES_FILE=data/cookies.json
+# Belgian Mobility developer portal subscription key for frequent requests
+BM_API_KEY=
+BM_API_KEY_HEADER=Ocp-Apim-Subscription-Key
 
 # Web API Settings
 API_PORT=25580
 API_HOST=0.0.0.0
 ```
 
-You can easily adjust the `API_PORT` value to change which port the web API runs on.
+You can easily adjust the `API_PORT` value to change which port the web API runs on. For frequent realtime requests, set `BM_API_KEY` to your Belgian Mobility developer portal key.
 
 ## 🧩 Standardized JSON format
 
@@ -757,7 +767,7 @@ Replace `<server-ip>` with the IP address of the computer running the API and `<
 | `--web-only` | Start web API only without data service | off |
 | `--interval` | Alias for `--data-interval` | 60 |
 | `--data-interval` | Time in seconds between data downloads | 60 |
-| `--scrape-interval` | Time in seconds between web scraping operations | 86400 (once per day) |
+| `--scrape-interval` | Time in seconds between feed URL refreshes | 86400 (once per day) |
 | `--data-dir` | Directory to store data files | data |
 
 ## 📚 API Reference
@@ -765,7 +775,7 @@ Replace `<server-ip>` with the IP address of the computer running the API and `<
 ### `start_data_service()`
 
 Starts the NMBS data service in the background. This will:
-1. Do an initial scrape of the website if needed
+1. Configure the official Belgian Mobility feed URLs
 2. Download the latest data files
 3. Continue running in the background to update the data regularly
 

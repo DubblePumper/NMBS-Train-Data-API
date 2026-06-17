@@ -1,0 +1,121 @@
+{
+  "name": "planning_stops",
+  "method": "GET",
+  "url": "http://127.0.0.1:25580/api/planningdata/stops?limit=5",
+  "ok": true,
+  "status": 200,
+  "fetched_at": "2026-06-17T10:22:49Z",
+  "request_body": null,
+  "response_headers": {
+    "Server": "Werkzeug/3.1.7 Python/3.13.7",
+    "Date": "Wed, 17 Jun 2026 10:22:49 GMT",
+    "Content-Type": "application/json",
+    "Content-Length": "2381",
+    "Content-Security-Policy": "default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline';",
+    "X-Content-Type-Options": "nosniff",
+    "X-Frame-Options": "DENY",
+    "X-XSS-Protection": "1; mode=block",
+    "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+    "Cache-Control": "no-store, no-cache, must-revalidate, max-age=0",
+    "Pragma": "no-cache",
+    "Referrer-Policy": "strict-origin-when-cross-origin",
+    "Access-Control-Allow-Origin": "*",
+    "Connection": "close"
+  },
+  "is_json": true,
+  "body": {
+    "ok": true,
+    "metadata": {
+      "api_name": "NMBS Train Data API",
+      "version": "1.0.0",
+      "endpoint": "/api/planningdata/stops",
+      "data_type": "stops",
+      "generated_at": "2026-06-17T12:20:26.528769",
+      "record_count": 5,
+      "total_records": 2861,
+      "page": 0,
+      "page_size": 5,
+      "total_pages": 573
+    },
+    "data": [
+      {
+        "location_type": 0,
+        "parent_station": "gs:nmbssncb:S8861317",
+        "platform_code": null,
+        "stop_code": null,
+        "stop_desc": "NMBSSNCB  PLATFORM",
+        "stop_id": "gs:nmbssncb:8861317",
+        "stop_lat": 50.557375,
+        "stop_lon": 4.697624,
+        "stop_name": "Chapelle-Dieu",
+        "stop_url": null,
+        "wheelchair_boarding": null,
+        "zone_id": null
+      },
+      {
+        "location_type": 1,
+        "parent_station": null,
+        "platform_code": null,
+        "stop_code": null,
+        "stop_desc": "NMBSSNCB  STATION",
+        "stop_id": "gs:nmbssncb:S8811171",
+        "stop_lat": 50.854071,
+        "stop_lon": 4.394424,
+        "stop_name": "Meiser",
+        "stop_url": null,
+        "wheelchair_boarding": null,
+        "zone_id": null
+      },
+      {
+        "location_type": 1,
+        "parent_station": null,
+        "platform_code": null,
+        "stop_code": null,
+        "stop_desc": "NMBSSNCB  STATION",
+        "stop_id": "gs:nmbssncb:S8811221",
+        "stop_lat": 50.88572,
+        "stop_lon": 4.46989,
+        "stop_name": "Zaventem",
+        "stop_url": null,
+        "wheelchair_boarding": null,
+        "zone_id": null
+      },
+      {
+        "location_type": 1,
+        "parent_station": null,
+        "platform_code": null,
+        "stop_code": null,
+        "stop_desc": "NMBSSNCB  STATION",
+        "stop_id": "gs:nmbssncb:S8811288",
+        "stop_lat": 50.90353,
+        "stop_lon": 4.67219,
+        "stop_name": "Herent",
+        "stop_url": null,
+        "wheelchair_boarding": null,
+        "zone_id": null
+      },
+      {
+        "location_type": 1,
+        "parent_station": null,
+        "platform_code": null,
+        "stop_code": null,
+        "stop_desc": "NMBSSNCB  STATION",
+        "stop_id": "gs:nmbssncb:S8811411",
+        "stop_lat": 50.822191,
+        "stop_lon": 4.389517,
+        "stop_name": "Etterbeek",
+        "stop_url": null,
+        "wheelchair_boarding": null,
+        "zone_id": null
+      }
+    ],
+    "pagination": {
+      "page": 0,
+      "pageSize": 5,
+      "totalRecords": 2861,
+      "totalPages": 573,
+      "hasNextPage": true,
+      "hasPrevPage": false
+    }
+  }
+}

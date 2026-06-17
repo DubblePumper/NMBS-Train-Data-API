@@ -14,18 +14,19 @@ class BaseService:
         self.cache_dir = cache_dir
         self.realtime_dir = os.path.join(cache_dir, 'Real-time_gegevens')
         self.planning_dir = os.path.join(cache_dir, 'Planning_gegevens')
+        self.netex_dir = os.path.join(cache_dir, 'NeTEx_EPIP')
         self.urls_file = os.path.join(self.realtime_dir, 'data_urls.json')
         self.planning_urls_file = os.path.join(self.planning_dir, 'planning_urls.json')
         self.last_updated_file = os.path.join(self.realtime_dir, 'last_updated.json')
         self.planning_updated_file = os.path.join(self.planning_dir, 'planning_updated.json')
+        self.netex_updated_file = os.path.join(self.netex_dir, 'netex_updated.json')
         self.urls = {}
         self.planning_urls = {}
-        self.cookies_file = os.getenv('COOKIES_FILE', 'data/cookies.json')
         
         # Create directories if they don't exist
         os.makedirs(self.realtime_dir, exist_ok=True)
         os.makedirs(self.planning_dir, exist_ok=True)
-        os.makedirs(os.path.dirname(self.cookies_file), exist_ok=True)
+        os.makedirs(self.netex_dir, exist_ok=True)
         
         # Create subdirectories for extracted planning data
         self.planning_extracted_dir = os.path.join(self.planning_dir, 'extracted')
@@ -70,15 +71,6 @@ class BaseService:
             logger.info(f"Planning URLs opgeslagen: {len(self.planning_urls)}")
         except Exception as e:
             logger.error(f"Fout bij opslaan van planning URLs: {str(e)}")
-    
-    def _save_cookies(self, cookies):
-        """Save cookies to file"""
-        try:
-            with open(self.cookies_file, 'w') as f:
-                json.dump(cookies, f)
-            logger.info("Cookies opgeslagen")
-        except Exception as e:
-            logger.error(f"Fout bij opslaan van cookies: {str(e)}")
     
     def get_timestamp(self):
         """Get current timestamp in ISO format"""

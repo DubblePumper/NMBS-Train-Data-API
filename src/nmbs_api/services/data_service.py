@@ -20,8 +20,8 @@ class DataService(BaseService):
     Main service to efficiently manage NMBS data retrieval and access
     
     This service integrates the specialized components:
-    1. ScraperService - Scrapes the NMBS website to get data URLs
-    2. DownloaderService - Downloads the actual data files (realtime and planning)
+    1. ScraperService - Resolves official Belgian Mobility feed URLs
+    2. DownloaderService - Downloads the actual data files (realtime, planning and optional NeTEx)
     3. ParserService - Parses and filters the data files for API access
     """
     
@@ -38,16 +38,18 @@ class DataService(BaseService):
     
     def scrape_website(self):
         """
-        Scrape the NMBS website to get data URLs (both realtime and planning)
+        Refresh official feed URL metadata.
+
+        Kept for backwards compatibility with older callers; no website
+        scraping is performed.
         """
         return self.scraper.scrape_website()
     
-    def download_data(self):
+    def download_data(self, force=False, update_type="all"):
         """
-        Download the latest data files using cached URLs
-        This can be done frequently (e.g., every minute)
+        Download the latest data files using official feed URLs.
         """
-        return self.downloader.download_data()
+        return self.downloader.download_data(force=force, update_type=update_type)
     
     def get_latest_realtime_data(self):
         """
@@ -88,15 +90,15 @@ class DataService(BaseService):
         """
         Run the data service with scheduled tasks
         """
-        # Schedule website scraping (once per day)
+        # Refresh configured feed URLs once per day.
         schedule.every().day.at("03:00").do(self.scrape_website)
         
-        # Schedule data download (every 30 seconds for both realtime and planning)
+        # Realtime downloads run frequently; static data is throttled by DownloaderService.
         schedule.every(30).seconds.do(self.download_data)
         
         # Initial run to ensure we have data right away
         if not self.scraper.urls or not self.scraper.planning_urls:
-            logger.info("Initiële webscraping...")
+            logger.info("Initiële feed URL configuratie...")
             self.scrape_website()
         
         logger.info("Initiële data download...")

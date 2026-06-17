@@ -1,0 +1,96 @@
+{
+  "name": "planning_translations",
+  "method": "GET",
+  "url": "http://127.0.0.1:25580/api/planningdata/translations?limit=5",
+  "ok": true,
+  "status": 200,
+  "fetched_at": "2026-06-17T10:22:50Z",
+  "request_body": null,
+  "response_headers": {
+    "Server": "Werkzeug/3.1.7 Python/3.13.7",
+    "Date": "Wed, 17 Jun 2026 10:22:50 GMT",
+    "Content-Type": "application/json",
+    "Content-Length": "1632",
+    "Content-Security-Policy": "default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline';",
+    "X-Content-Type-Options": "nosniff",
+    "X-Frame-Options": "DENY",
+    "X-XSS-Protection": "1; mode=block",
+    "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+    "Cache-Control": "no-store, no-cache, must-revalidate, max-age=0",
+    "Pragma": "no-cache",
+    "Referrer-Policy": "strict-origin-when-cross-origin",
+    "Access-Control-Allow-Origin": "*",
+    "Connection": "close"
+  },
+  "is_json": true,
+  "body": {
+    "ok": true,
+    "metadata": {
+      "api_name": "NMBS Train Data API",
+      "version": "1.0.0",
+      "endpoint": "/api/planningdata/translations",
+      "data_type": "translations",
+      "generated_at": "2026-06-17T12:20:26.528769",
+      "record_count": 5,
+      "total_records": 2474,
+      "page": 0,
+      "page_size": 5,
+      "total_pages": 495
+    },
+    "data": [
+      {
+        "table_name": "stops",
+        "field_name": "stop_name",
+        "record_id": null,
+        "record_sub_id": null,
+        "field_value": "Aéroport Cdg TGV (FR)",
+        "language": "de",
+        "translation": "Aéroport Cdg TGV (FR)"
+      },
+      {
+        "table_name": "stops",
+        "field_name": "stop_name",
+        "record_id": null,
+        "record_sub_id": null,
+        "field_value": "Alken",
+        "language": "de",
+        "translation": "Alken"
+      },
+      {
+        "table_name": "stops",
+        "field_name": "stop_name",
+        "record_id": null,
+        "record_sub_id": null,
+        "field_value": "Amay",
+        "language": "de",
+        "translation": "Amay"
+      },
+      {
+        "table_name": "stops",
+        "field_name": "stop_name",
+        "record_id": null,
+        "record_sub_id": null,
+        "field_value": "Anderlecht",
+        "language": "de",
+        "translation": "Anderlecht"
+      },
+      {
+        "table_name": "stops",
+        "field_name": "stop_name",
+        "record_id": null,
+        "record_sub_id": null,
+        "field_value": "Annappes (FR)",
+        "language": "de",
+        "translation": "Annappes (FR)"
+      }
+    ],
+    "pagination": {
+      "page": 0,
+      "pageSize": 5,
+      "totalRecords": 2474,
+      "totalPages": 495,
+      "hasNextPage": true,
+      "hasPrevPage": false
+    }
+  }
+}

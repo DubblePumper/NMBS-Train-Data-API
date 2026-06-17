@@ -1,0 +1,318 @@
+{
+  "name": "trajectories",
+  "method": "GET",
+  "url": "http://127.0.0.1:25580/api/trajectories?limit=5",
+  "ok": true,
+  "status": 200,
+  "fetched_at": "2026-06-17T10:22:50Z",
+  "request_body": null,
+  "response_headers": {
+    "Server": "Werkzeug/3.1.7 Python/3.13.7",
+    "Date": "Wed, 17 Jun 2026 10:22:50 GMT",
+    "Content-Type": "application/json",
+    "Content-Length": "7704",
+    "Content-Security-Policy": "default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline';",
+    "X-Content-Type-Options": "nosniff",
+    "X-Frame-Options": "DENY",
+    "X-XSS-Protection": "1; mode=block",
+    "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+    "Cache-Control": "no-store, no-cache, must-revalidate, max-age=0",
+    "Pragma": "no-cache",
+    "Referrer-Policy": "strict-origin-when-cross-origin",
+    "Access-Control-Allow-Origin": "*",
+    "Connection": "close"
+  },
+  "is_json": true,
+  "body": {
+    "ok": true,
+    "metadata": {
+      "api_name": "NMBS Train Data API",
+      "version": "1.0.0",
+      "endpoint": "/api/trajectories",
+      "data_type": "trajectories",
+      "generated_at": "2026-06-17T12:22:50.826616",
+      "record_count": 5,
+      "total_records": 388,
+      "page": 0,
+      "page_size": 5,
+      "total_pages": 78
+    },
+    "data": [
+      {
+        "entity_id": "88____:007::8891702:8844628:40:1742:20260329",
+        "trip_id": "88____:007::8891702:8844628:40:1742:20260329",
+        "route": {
+          "route_id": null,
+          "route_type": null,
+          "route_name": "Unknown Route",
+          "agency_id": null
+        },
+        "trip": {
+          "trip_number": null,
+          "trip_headsign": null,
+          "service_id": null
+        },
+        "stops": [
+          {
+            "stop_id": "8891702_3",
+            "station": {
+              "name": "Unknown Station",
+              "location": {
+                "latitude": null,
+                "longitude": null
+              },
+              "translations": {}
+            },
+            "arrival": null,
+            "departure": {
+              "timestamp": "1774704180",
+              "datetime": "2026-03-28 14:23:00 (Saturday)",
+              "delay_seconds": 0,
+              "delay_minutes": 0,
+              "status": "on time"
+            }
+          },
+          {
+            "stop_id": "8844628_1",
+            "station": {
+              "name": "Unknown Station",
+              "location": {
+                "latitude": null,
+                "longitude": null
+              },
+              "translations": {}
+            },
+            "arrival": {
+              "timestamp": "1774716120",
+              "datetime": "2026-03-28 17:42:00 (Saturday)",
+              "delay_seconds": 0,
+              "delay_minutes": 0,
+              "status": "on time"
+            },
+            "departure": null
+          }
+        ]
+      },
+      {
+        "entity_id": "88____:007::8866001:8814001:62:1742:20260328",
+        "trip_id": "88____:007::8866001:8814001:62:1742:20260328",
+        "route": {
+          "route_id": null,
+          "route_type": null,
+          "route_name": "Unknown Route",
+          "agency_id": null
+        },
+        "trip": {
+          "trip_number": null,
+          "trip_headsign": null,
+          "service_id": null
+        },
+        "stops": [
+          {
+            "stop_id": "8866001_5",
+            "station": {
+              "name": "Unknown Station",
+              "location": {
+                "latitude": null,
+                "longitude": null
+              },
+              "translations": {}
+            },
+            "arrival": null,
+            "departure": {
+              "timestamp": "1774704960",
+              "datetime": "2026-03-28 14:36:00 (Saturday)",
+              "delay_seconds": 0,
+              "delay_minutes": 0,
+              "status": "on time"
+            }
+          },
+          {
+            "stop_id": "8814001_13",
+            "station": {
+              "name": "Unknown Station",
+              "location": {
+                "latitude": null,
+                "longitude": null
+              },
+              "translations": {}
+            },
+            "arrival": {
+              "timestamp": "1774716120",
+              "datetime": "2026-03-28 17:42:00 (Saturday)",
+              "delay_seconds": 0,
+              "delay_minutes": 0,
+              "status": "on time"
+            },
+            "departure": null
+          }
+        ]
+      },
+      {
+        "entity_id": "88____:007::8892338:8833001:38:1741:20261212",
+        "trip_id": "88____:007::8892338:8833001:38:1741:20261212",
+        "route": {
+          "route_id": null,
+          "route_type": null,
+          "route_name": "Unknown Route",
+          "agency_id": null
+        },
+        "trip": {
+          "trip_number": null,
+          "trip_headsign": null,
+          "service_id": null
+        },
+        "stops": [
+          {
+            "stop_id": "8892338_1",
+            "station": {
+              "name": "Unknown Station",
+              "location": {
+                "latitude": null,
+                "longitude": null
+              },
+              "translations": {}
+            },
+            "arrival": null,
+            "departure": {
+              "timestamp": "1774705920",
+              "datetime": "2026-03-28 14:52:00 (Saturday)",
+              "delay_seconds": 0,
+              "delay_minutes": 0,
+              "status": "on time"
+            }
+          },
+          {
+            "stop_id": "8833001_C",
+            "station": {
+              "name": "Unknown Station",
+              "location": {
+                "latitude": null,
+                "longitude": null
+              },
+              "translations": {}
+            },
+            "arrival": {
+              "timestamp": "1774716060",
+              "datetime": "2026-03-28 17:41:00 (Saturday)",
+              "delay_seconds": 0,
+              "delay_minutes": 0,
+              "status": "on time"
+            },
+            "departure": null
+          }
+        ]
+      },
+      {
+        "entity_id": "88____:007::8843406:8885704:49:1746:20260329",
+        "trip_id": "88____:007::8843406:8885704:49:1746:20260329",
+        "route": {
+          "route_id": null,
+          "route_type": null,
+          "route_name": "Unknown Route",
+          "agency_id": null
+        },
+        "trip": {
+          "trip_number": null,
+          "trip_headsign": null,
+          "service_id": null
+        },
+        "stops": [
+          {
+            "stop_id": "8843406_7",
+            "station": {
+              "name": "Unknown Station",
+              "location": {
+                "latitude": null,
+                "longitude": null
+              },
+              "translations": {}
+            },
+            "arrival": null,
+            "departure": {
+              "timestamp": "1774707000",
+              "datetime": "2026-03-28 15:10:00 (Saturday)",
+              "delay_seconds": 0,
+              "delay_minutes": 0,
+              "status": "on time"
+            }
+          },
+          {
+            "stop_id": "8885704_4",
+            "station": {
+              "name": "Unknown Station",
+              "location": {
+                "latitude": null,
+                "longitude": null
+              },
+              "translations": {}
+            },
+            "arrival": {
+              "timestamp": "1774716360",
+              "datetime": "2026-03-28 17:46:00 (Saturday)",
+              "delay_seconds": 0,
+              "delay_minutes": 0,
+              "status": "on time"
+            },
+            "departure": null
+          }
+        ]
+      },
+      {
+        "entity_id": "88____:007::8885704:8843406:49:1749:20260329",
+        "trip_id": "88____:007::8885704:8843406:49:1749:20260329",
+        "route": {
+          "route_id": null,
+          "route_type": null,
+          "route_name": "Unknown Route",
+          "agency_id": null
+        },
+        "trip": {
+          "trip_number": null,
+          "trip_headsign": null,
+          "service_id": null
+        },
+        "stops": [
+          {
+            "stop_id": "8885704_4",
+            "station": {
+              "name": "Unknown Station",
+              "location": {
+                "latitude": null,
+                "longitude": null
+              },
+              "translations": {}
+            },
+            "arrival": null,
+            "departure": {
+              "timestamp": "1774707180",
+              "datetime": "2026-03-28 15:13:00 (Saturday)",
+              "delay_seconds": 0,
+              "delay_minutes": 0,
+              "status": "on time"
+            }
+          },
+          {
+            "stop_id": "8843406_7",
+            "station": {
+              "name": "Unknown Station",
+              "location": {
+                "latitude": null,
+                "longitude": null
+              },
+              "translations": {}
+            },
+            "arrival": {
+              "timestamp": "1774716540",
+              "datetime": "2026-03-28 17:49:00 (Saturday)",
+              "delay_seconds": 0,
+              "delay_minutes": 0,
+              "status": "on time"
+            },
+            "departure": null
+          }
+        ]
+      }
+    ]
+  }
+}

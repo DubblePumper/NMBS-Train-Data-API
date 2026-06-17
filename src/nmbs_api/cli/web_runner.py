@@ -36,7 +36,7 @@ def run_data_service(interval: int, scrape_interval: int, data_dir: str, logger)
     """Run the NMBS data collection service in a separate thread."""
     logger.info(f"Starting NMBS Data Collection Service - {datetime.now().isoformat()}")
     logger.info(f"Data download interval: {interval} seconds")
-    logger.info(f"Website scraping interval: {scrape_interval} seconds")
+    logger.info(f"Feed URL refresh interval: {scrape_interval} seconds")
     logger.info(f"Data directory: {data_dir}")
 
     service = NMBSDataService(cache_dir=data_dir)
@@ -44,7 +44,7 @@ def run_data_service(interval: int, scrape_interval: int, data_dir: str, logger)
 
     try:
         with logger.group("Initial Data Collection"):
-            logger.info("Performing initial website scrape...")
+            logger.info("Configuring initial feed URLs...")
             service.scrape_website()
             last_scrape_time = time.time()
 
@@ -62,8 +62,8 @@ def run_data_service(interval: int, scrape_interval: int, data_dir: str, logger)
         while True:
             current_time = time.time()
             if current_time - last_scrape_time >= scrape_interval:
-                with logger.group("Scheduled Website Scrape"):
-                    logger.info("Scraping website for updates...")
+                with logger.group("Scheduled Feed URL Refresh"):
+                    logger.info("Refreshing feed URL configuration...")
                     service.scrape_website()
                     last_scrape_time = current_time
 
@@ -118,7 +118,7 @@ def build_parser() -> argparse.ArgumentParser:
 
     parser.add_argument('--with-data-service', action='store_true', help='Also run the data collection service')
     parser.add_argument('--data-interval', type=int, default=int(os.getenv('DATA_INTERVAL', 60)), help='Interval in seconds between data downloads (default: 60)')
-    parser.add_argument('--scrape-interval', type=int, default=int(os.getenv('SCRAPE_INTERVAL', 86400)), help='Interval in seconds between website scraping (default: 86400 - once per day)')
+    parser.add_argument('--scrape-interval', type=int, default=int(os.getenv('SCRAPE_INTERVAL', 86400)), help='Interval in seconds between feed URL refreshes (default: 86400 - once per day)')
     parser.add_argument('--data-dir', type=str, default=os.getenv('DATA_DIR', 'data'), help='Directory to store data files (default: data)')
     parser.add_argument('--verbose', action='store_true', help='Show INFO level logs in the console')
     parser.add_argument('--no-colors', action='store_true', help='Disable colored output in console')

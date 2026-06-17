@@ -56,7 +56,7 @@ REQUEST_SCHEMAS = {
         "type": "object",
         "properties": {
             "force": {"type": "boolean"},
-            "update_type": {"type": "string", "enum": ["realtime", "planning", "all"]},
+            "update_type": {"type": "string", "enum": ["realtime", "planning", "netex", "all"]},
             "clear_cache": {"type": "boolean"},
         },
         "required": ["force"],

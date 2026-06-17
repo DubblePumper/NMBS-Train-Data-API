@@ -1,0 +1,111 @@
+{
+  "name": "planning_trips",
+  "method": "GET",
+  "url": "http://127.0.0.1:25580/api/planningdata/trips?limit=5",
+  "ok": true,
+  "status": 200,
+  "fetched_at": "2026-06-17T10:22:50Z",
+  "request_body": null,
+  "response_headers": {
+    "Server": "Werkzeug/3.1.7 Python/3.13.7",
+    "Date": "Wed, 17 Jun 2026 10:22:50 GMT",
+    "Content-Type": "application/json",
+    "Content-Length": "2391",
+    "Content-Security-Policy": "default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline';",
+    "X-Content-Type-Options": "nosniff",
+    "X-Frame-Options": "DENY",
+    "X-XSS-Protection": "1; mode=block",
+    "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+    "Cache-Control": "no-store, no-cache, must-revalidate, max-age=0",
+    "Pragma": "no-cache",
+    "Referrer-Policy": "strict-origin-when-cross-origin",
+    "Access-Control-Allow-Origin": "*",
+    "Connection": "close"
+  },
+  "is_json": true,
+  "body": {
+    "ok": true,
+    "metadata": {
+      "api_name": "NMBS Train Data API",
+      "version": "1.0.0",
+      "endpoint": "/api/planningdata/trips",
+      "data_type": "trips",
+      "generated_at": "2026-06-17T12:20:26.528769",
+      "record_count": 5,
+      "total_records": 76158,
+      "page": 0,
+      "page_size": 5,
+      "total_pages": 15232
+    },
+    "data": [
+      {
+        "bikes_allowed": 1.0,
+        "block_id": 2588,
+        "direction_id": null,
+        "route_id": "gr:nmbssncb:60",
+        "service_id": "gc:nmbssncb:000049",
+        "shape_id": null,
+        "trip_headsign": "Schaerbeek",
+        "trip_id": "gt:nmbssncb:88____:046::8821006:8811007:14:1308:20260426",
+        "trip_short_name": 13226,
+        "wheelchair_accessible": null
+      },
+      {
+        "bikes_allowed": 1.0,
+        "block_id": 2606,
+        "direction_id": null,
+        "route_id": "gr:nmbssncb:60",
+        "service_id": "gc:nmbssncb:000049",
+        "shape_id": null,
+        "trip_headsign": "Schaerbeek",
+        "trip_id": "gt:nmbssncb:88____:046::8821006:8811007:14:1408:20260426",
+        "trip_short_name": 13227,
+        "wheelchair_accessible": null
+      },
+      {
+        "bikes_allowed": 1.0,
+        "block_id": 2624,
+        "direction_id": null,
+        "route_id": "gr:nmbssncb:60",
+        "service_id": "gc:nmbssncb:000049",
+        "shape_id": null,
+        "trip_headsign": "Schaerbeek",
+        "trip_id": "gt:nmbssncb:88____:046::8821006:8811007:14:1508:20260426",
+        "trip_short_name": 13228,
+        "wheelchair_accessible": null
+      },
+      {
+        "bikes_allowed": 1.0,
+        "block_id": 2642,
+        "direction_id": null,
+        "route_id": "gr:nmbssncb:60",
+        "service_id": "gc:nmbssncb:000049",
+        "shape_id": null,
+        "trip_headsign": "Schaerbeek",
+        "trip_id": "gt:nmbssncb:88____:046::8821006:8811007:14:1608:20260426",
+        "trip_short_name": 13229,
+        "wheelchair_accessible": null
+      },
+      {
+        "bikes_allowed": 1.0,
+        "block_id": 2660,
+        "direction_id": null,
+        "route_id": "gr:nmbssncb:60",
+        "service_id": "gc:nmbssncb:000049",
+        "shape_id": null,
+        "trip_headsign": "Schaerbeek",
+        "trip_id": "gt:nmbssncb:88____:046::8821006:8811007:14:1708:20260426",
+        "trip_short_name": 13230,
+        "wheelchair_accessible": null
+      }
+    ],
+    "pagination": {
+      "page": 0,
+      "pageSize": 5,
+      "totalRecords": 76158,
+      "totalPages": 15232,
+      "hasNextPage": true,
+      "hasPrevPage": false
+    }
+  }
+}

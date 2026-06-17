@@ -1,0 +1,106 @@
+{
+  "name": "planning_routes",
+  "method": "GET",
+  "url": "http://127.0.0.1:25580/api/planningdata/routes?limit=5",
+  "ok": true,
+  "status": 200,
+  "fetched_at": "2026-06-17T10:22:49Z",
+  "request_body": null,
+  "response_headers": {
+    "Server": "Werkzeug/3.1.7 Python/3.13.7",
+    "Date": "Wed, 17 Jun 2026 10:22:49 GMT",
+    "Content-Type": "application/json",
+    "Content-Length": "2040",
+    "Content-Security-Policy": "default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline';",
+    "X-Content-Type-Options": "nosniff",
+    "X-Frame-Options": "DENY",
+    "X-XSS-Protection": "1; mode=block",
+    "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+    "Cache-Control": "no-store, no-cache, must-revalidate, max-age=0",
+    "Pragma": "no-cache",
+    "Referrer-Policy": "strict-origin-when-cross-origin",
+    "Access-Control-Allow-Origin": "*",
+    "Connection": "close"
+  },
+  "is_json": true,
+  "body": {
+    "ok": true,
+    "metadata": {
+      "api_name": "NMBS Train Data API",
+      "version": "1.0.0",
+      "endpoint": "/api/planningdata/routes",
+      "data_type": "routes",
+      "generated_at": "2026-06-17T12:20:26.528769",
+      "record_count": 5,
+      "total_records": 1282,
+      "page": 0,
+      "page_size": 5,
+      "total_pages": 257
+    },
+    "data": [
+      {
+        "agency_id": "nmbssncb",
+        "route_color": "016AB3",
+        "route_desc": null,
+        "route_id": "gr:nmbssncb:100",
+        "route_long_name": "Liers -- Namur",
+        "route_short_name": "IC",
+        "route_text_color": "FFFFFF",
+        "route_type": 2,
+        "route_url": null
+      },
+      {
+        "agency_id": "nmbssncb",
+        "route_color": "016AB3",
+        "route_desc": null,
+        "route_id": "gr:nmbssncb:1008",
+        "route_long_name": "Begijnendijk -- Aarschot",
+        "route_short_name": "BUS",
+        "route_text_color": "FFFFFF",
+        "route_type": 3,
+        "route_url": null
+      },
+      {
+        "agency_id": "nmbssncb",
+        "route_color": "016AB3",
+        "route_desc": null,
+        "route_id": "gr:nmbssncb:1017",
+        "route_long_name": "Lierre -- Aarschot",
+        "route_short_name": "BUS",
+        "route_text_color": "FFFFFF",
+        "route_type": 3,
+        "route_url": null
+      },
+      {
+        "agency_id": "nmbssncb",
+        "route_color": "016AB3",
+        "route_desc": null,
+        "route_id": "gr:nmbssncb:1027",
+        "route_long_name": "Nivelles -- Charleroi-Central",
+        "route_short_name": "BUS",
+        "route_text_color": "FFFFFF",
+        "route_type": 3,
+        "route_url": null
+      },
+      {
+        "agency_id": "nmbssncb",
+        "route_color": "016AB3",
+        "route_desc": null,
+        "route_id": "gr:nmbssncb:1028",
+        "route_long_name": "Bruxelles-Midi -- Charleroi-Central",
+        "route_short_name": "BUS",
+        "route_text_color": "FFFFFF",
+        "route_type": 3,
+        "route_url": null
+      }
+    ],
+    "pagination": {
+      "page": 0,
+      "pageSize": 5,
+      "totalRecords": 1282,
+      "totalPages": 257,
+      "hasNextPage": true,
+      "hasPrevPage": false
+    }
+  }
+}

@@ -12,6 +12,7 @@ from __future__ import annotations
 import argparse
 import datetime as dt
 import json
+import os
 from pathlib import Path
 from typing import Any
 from urllib import error, request
@@ -168,7 +169,7 @@ def main() -> None:
     parser.add_argument("--base-url", default="http://localhost:25580", help="API base URL")
     parser.add_argument(
         "--output-root",
-        default="exports",
+        default=os.getenv("SNAPSHOT_ROOT", "exports"),
         help="Root output folder (timestamped subfolder is created automatically)",
     )
     parser.add_argument(

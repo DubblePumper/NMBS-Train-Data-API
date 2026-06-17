@@ -1,0 +1,76 @@
+{
+  "name": "planning_calendar_dates",
+  "method": "GET",
+  "url": "http://127.0.0.1:25580/api/planningdata/calendar_dates?limit=5",
+  "ok": true,
+  "status": 200,
+  "fetched_at": "2026-06-17T10:22:50Z",
+  "request_body": null,
+  "response_headers": {
+    "Server": "Werkzeug/3.1.7 Python/3.13.7",
+    "Date": "Wed, 17 Jun 2026 10:22:50 GMT",
+    "Content-Type": "application/json",
+    "Content-Length": "1075",
+    "Content-Security-Policy": "default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline';",
+    "X-Content-Type-Options": "nosniff",
+    "X-Frame-Options": "DENY",
+    "X-XSS-Protection": "1; mode=block",
+    "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+    "Cache-Control": "no-store, no-cache, must-revalidate, max-age=0",
+    "Pragma": "no-cache",
+    "Referrer-Policy": "strict-origin-when-cross-origin",
+    "Access-Control-Allow-Origin": "*",
+    "Connection": "close"
+  },
+  "is_json": true,
+  "body": {
+    "ok": true,
+    "metadata": {
+      "api_name": "NMBS Train Data API",
+      "version": "1.0.0",
+      "endpoint": "/api/planningdata/calendar_dates",
+      "data_type": "calendar_dates",
+      "generated_at": "2026-06-17T12:20:26.528769",
+      "record_count": 5,
+      "total_records": 1636481,
+      "page": 0,
+      "page_size": 5,
+      "total_pages": 327297
+    },
+    "data": [
+      {
+        "date": "20260923",
+        "exception_type": "1",
+        "service_id": "gc:nmbssncb:003605"
+      },
+      {
+        "date": "20260924",
+        "exception_type": "1",
+        "service_id": "gc:nmbssncb:003605"
+      },
+      {
+        "date": "20260925",
+        "exception_type": "1",
+        "service_id": "gc:nmbssncb:003605"
+      },
+      {
+        "date": "20260926",
+        "exception_type": "1",
+        "service_id": "gc:nmbssncb:003605"
+      },
+      {
+        "date": "20260927",
+        "exception_type": "1",
+        "service_id": "gc:nmbssncb:003605"
+      }
+    ],
+    "pagination": {
+      "page": 0,
+      "pageSize": 5,
+      "totalRecords": 1636481,
+      "totalPages": 327297,
+      "hasNextPage": true,
+      "hasPrevPage": false
+    }
+  }
+}

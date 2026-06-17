@@ -129,6 +129,12 @@ def add_metadata_to_response(data, endpoint_name=None, file_type=None):
         # For realtime data, count the total number of records from the entity list if available
         if isinstance(data, dict) and "entity" in data:
             metadata["total_records"] = len(data["entity"])
+        elif isinstance(data, dict) and "feeds" in data and isinstance(data["feeds"], dict):
+            metadata["total_records"] = sum(
+                len(feed.get("entity", []))
+                for feed in data["feeds"].values()
+                if isinstance(feed, dict)
+            )
         elif isinstance(data, dict) and "header" in data and "entity" in data:
             # If data is in GTFS format with header and entity
             metadata["total_records"] = len(data["entity"])
@@ -828,7 +834,7 @@ def update_data_endpoint():
                 "type": "object",
                 "properties": {
                     "force": {"type": "boolean"},
-                    "update_type": {"type": "string", "enum": ["realtime", "planning", "all"]},
+                    "update_type": {"type": "string", "enum": ["realtime", "planning", "netex", "all"]},
                     "clear_cache": {"type": "boolean"}
                 },
                 "required": ["force"]
@@ -858,7 +864,7 @@ def update_data_endpoint():
         start_time = datetime.datetime.now()
         
         # Voer de update uit
-        success = force_update()
+        success = force_update(force=force, update_type=update_type)
         
         # Bereken duur van de update
         elapsed_time = (datetime.datetime.now() - start_time).total_seconds()
