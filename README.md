@@ -12,7 +12,7 @@
 
 Een zelfstandige API voor het verkrijgen van real-time en planningsgegevens van de Belgische spoorwegen (NMBS/SNCB).
 
-> 🔗 Deze API maakt deel uit van het hoofdproject: [NMBS-Train-data](https://github.com/DubblePumper/NMBS-Train-data)
+> 🔗 Deze API maakt deel uit van het hoofdproject: [nmbs-dashboard](https://github.com/DubblePumper/nmbs-dashboard)
 
 ## 📋 Inhoudsopgave
 - [Kenmerken](#kenmerken)
@@ -47,8 +47,8 @@ Een zelfstandige API voor het verkrijgen van real-time en planningsgegevens van 
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/nmbs-train-data-api.git
-cd nmbs-train-data-api
+git clone https://github.com/DubblePumper/NMBS-Train-Data-API.git
+cd NMBS-Train-Data-API
 
 # Install the package
 pip install -e .
@@ -542,7 +542,7 @@ Dit project is gelicenseerd onder de MIT-licentie - zie het LICENSE-bestand voor
 
 A standalone API for retrieving real-time and scheduling data from the Belgian railways (NMBS/SNCB).
 
-> 🔗 This API is part of the main project: [NMBS-Train-data](https://github.com/DubblePumper/NMBS-Train-data)
+> 🔗 This API is part of the main project: [nmbs-dashboard](https://github.com/DubblePumper/nmbs-dashboard)
 
 ## 📋 Table of Contents
 - [Features](#features)
@@ -577,8 +577,8 @@ A standalone API for retrieving real-time and scheduling data from the Belgian r
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/nmbs-train-data-api.git
-cd nmbs-train-data-api
+git clone https://github.com/DubblePumper/NMBS-Train-Data-API.git
+cd NMBS-Train-Data-API
 
 # Install the package
 pip install -e .
